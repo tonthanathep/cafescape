@@ -3,7 +3,7 @@ import { Howl } from "howler";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { BlendType, CanvasType } from "./playerType";
 import createHowlInstance from "../utils/createHowlInstance";
-import { soundSourcesType } from "../components/BlendPlayer/soundSources";
+import { soundSourcesType } from "../data/soundSources";
 
 export interface PlayerStore {
   currentCanvas: CanvasType;

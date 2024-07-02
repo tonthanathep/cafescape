@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import usePlayerStore from "@/app/player/store";
-import soundSources from "./soundSources";
+import soundSources from "../../data/soundSources";
 
 interface Props {
   layerType: "ambi" | "cafe";
@@ -45,14 +45,6 @@ const AddSound = ({ layerType }: Props) => {
   };
 
   const options = availableOptions();
-  console.log(layerType, options);
-
-  // const excludeIds =
-  //   layerType === "cafe"
-  //     ? currentBlend.cafeLayers.map((sound) => sound.id)
-  //     : currentBlend.ambiLayers.map((sound) => sound.id);
-
-  // console.log(excludeIds);
 
   return (
     <div className='dropdown dropdown-end'>

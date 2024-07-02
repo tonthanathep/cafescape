@@ -3,7 +3,7 @@
 import { PlayerStore } from "../player/store";
 import { Howl } from "howler";
 import { createLowPass } from "./createSoundFilter";
-import { soundSourcesType } from "../components/BlendPlayer/soundSources";
+import { soundSourcesType } from "../data/soundSources";
 
 interface SpriteMap {
   [key: string]: [number, number, boolean];

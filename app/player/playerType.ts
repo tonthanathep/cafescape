@@ -1,4 +1,4 @@
-import { soundSourcesType } from "../components/BlendPlayer/soundSources";
+import { soundSourcesType } from "../data/soundSources";
 
 export interface listenerPos {
   //x,z horizontal y vertical
