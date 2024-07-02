@@ -65,7 +65,19 @@ const AddSound = ({ layerType }: Props) => {
           + Add Sound ({options.existingSounds.length}/3)
         </div>
       )}
-      <div className=' dropdown-content rounded-2xl z-[1]'>
+      <div className='join join-vertical dropdown-content rounded-2xl z-[1]'>
+        {layerType === "cafe" && (
+          <div className='join-item bg-white pl-5 pt-5 pb-3 card drop-shadow-md'>
+            <h1 className='text-sm font-semibold'>Cafe Sounds</h1>
+            <h1 className='text-xs font-light'>Adding more comfy vibes</h1>
+          </div>
+        )}
+        {layerType !== "cafe" && (
+          <div className='join-item bg-white pl-5 pt-5 pb-3 card drop-shadow-md'>
+            <h1 className='text-sm font-semibold'>Ambience Sounds</h1>
+            <h1 className='text-xs font-light'>Adding more comfy vibes</h1>
+          </div>
+        )}
         {soundSources.map((option) =>
           options.availableOptions.includes(option.id) ? (
             <div
@@ -80,6 +92,21 @@ const AddSound = ({ layerType }: Props) => {
             >
               <h1 className='text-md font-medium text-slate-500'>
                 {option.name}
+                {option.soundType === "static" ? (
+                  <div
+                    className='tooltip'
+                    data-tip='This sounds will be played from fixed location occasionally to simulate the real cafe enviornments'
+                  >
+                    <div className='badge badge-success ml-2'>Static</div>
+                  </div>
+                ) : option.soundType === "nature" ? (
+                  <div
+                    className='tooltip'
+                    data-tip='This sounds will be played from fixed location occasionally to simulate the real cafe enviornments'
+                  >
+                    <div className='badge badge-primary ml-2'>Nature</div>
+                  </div>
+                ) : null}
                 {/* {option.isOutside ? (
                   <div
                     className='tooltip'
