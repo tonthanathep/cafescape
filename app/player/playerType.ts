@@ -1,4 +1,4 @@
-import { soundSourcesType } from "../data/soundSources";
+import { SoundSourcesType } from "../data/soundSources";
 
 export interface listenerPos {
   //x,z horizontal y vertical
@@ -11,12 +11,13 @@ export interface BlendType {
   id: number;
   created_at: string;
   name: string;
-  cafeLayers: soundSourcesType[];
-  ambiLayers: soundSourcesType[];
+  cafeLayers: SoundSourcesType[];
+  ambiLayers: SoundSourcesType[];
   listenerPos: listenerPos;
 }
 
 export interface canvasSoundLayer {
+  name: string;
   id: number;
   x: number;
   y: number;

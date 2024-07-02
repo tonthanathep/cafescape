@@ -2,7 +2,7 @@ import { cafeSounds } from "./cafeSounds";
 import { staticSounds } from "./staticSounds";
 import { natureSounds } from "./natureSounds";
 
-interface SoundSourcesType {
+export interface SoundSourcesType {
   id: number;
   name: string;
   desc: string;

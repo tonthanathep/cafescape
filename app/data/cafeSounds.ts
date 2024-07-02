@@ -7,7 +7,7 @@ export const cafeSounds = [
     renderType: "cafe",
     soundType: "cafe",
     vol: 1.0,
-    pos: { x: 10, y: 0, z: 20 },
+    pos: { x: 35, y: 0, z: 30 },
     orientation: [0, 0, 0],
     pannerAttr: {},
   },

@@ -70,7 +70,7 @@ const SpatialCanvas = () => {
           ></div>
         </Draggable>
 
-        {currentCanvas.canvasCafe.map((layer, index) => (
+        {currentCanvas.canvasCafe.map((layer) => (
           <motion.div
             initial='hidden'
             animate='visible'
@@ -78,14 +78,13 @@ const SpatialCanvas = () => {
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <Draggable
-              key={index}
               bounds='parent'
               disabled
-              position={{ x: layer.x, y: layer.y }}
+              position={{ x: layer.x, y: layer.z }}
             >
               <div className='z-10 w-fit p-2 pl-4 pr-4 bg-white/70 backdrop-blur-sm rounded-full drop-shadow-[0_14px_5px_rgba(0,0,0,0.60)] hover:-translate-y-2 hover:drop-shadow-[0_30px_10px_rgba(0,0,0,0.25)] transition-all duration-400'>
                 <p className='text-sm font-semibold text-black/80'>
-                  {currentBlend.cafeLayers[index].name}
+                  {layer.name}
                 </p>
               </div>
             </Draggable>

@@ -3,7 +3,7 @@ import { Howl } from "howler";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { BlendType, CanvasType } from "./playerType";
 import createHowlInstance from "../utils/createHowlInstance";
-import { soundSourcesType } from "../data/soundSources";
+import { SoundSourcesType } from "../data/soundSources";
 
 export interface PlayerStore {
   currentCanvas: CanvasType;
@@ -11,7 +11,7 @@ export interface PlayerStore {
   currentCafeHowl: { id: number; howl: Howl }[];
   currentAmbiHowl: { id: number; howl: Howl }[];
   setBlend: (blend: BlendType) => void;
-  addLayer: (layerType: "cafe" | "ambi", layer: soundSourcesType) => void;
+  addLayer: (layerType: "cafe" | "ambi", layer: SoundSourcesType) => void;
   deleteLayer: (layerType: "cafe" | "ambi", layerId: number) => void;
   setListenerPos: (x: number, z: number) => void;
   setCanvas: (
@@ -94,13 +94,23 @@ const usePlayerStore = create<PlayerStore>((set) => ({
       // Translate Save Data to Canvas Data & Create New Cafe Howl
       const newCafeData = blend.cafeLayers.map((layer) => {
         const newHowl = createHowlInstance(layer, state);
+        const canvasX = Math.round(
+          (layer.pos.x! / 100) * state.currentCanvas.canvasWidth -
+            state.currentCanvas.listenerWidth / 2
+        );
+
+        const canvasZ = Math.round(
+          (layer.pos.z! / 100) * state.currentCanvas.canvasHeight -
+            state.currentCanvas.listenerHeight / 2
+        );
 
         return {
           canvasLayer: {
+            name: layer.name,
             id: layer.id,
-            x: newHowl?.pos()[0],
+            x: canvasX,
             y: layer.pos.y,
-            z: newHowl?.pos()[2],
+            z: canvasZ,
           },
           howl: {
             id: layer.id,
@@ -150,31 +160,16 @@ const usePlayerStore = create<PlayerStore>((set) => ({
     set((state) => {
       // Add New Sound Instance
       const newHowl = createHowlInstance(layer, state);
-      console.log(layer);
 
-      // const canvasX = Math.round(
-      //   (layer.pos.x / 100) * state.currentCanvas.canvasWidth -
-      //     state.currentCanvas.listenerWidth / 2
-      // );
-      // const canvasZ = Math.round(
-      //   (layer.pos.z / 100) * state.currentCanvas.canvasHeight -
-      //     state.currentCanvas.listenerHeight / 2
-      // );
-      // newHowl.pos(canvasX, layer.pos.y, canvasZ);
-      // if (layerType === "ambi") {
-      //   newHowl.orientation(0, -1, 0);
-      // }
-      // newHowl.play();
-      // newHowl.pannerAttr({
-      //   panningModel: "HRTF",
-      //   refDistance: 1,
-      //   rolloffFactor: 1,
-      //   distanceModel: "inverse",
-      //   coneInnerAngle: 360, // Default cone inner angle
-      //   coneOuterAngle: 360, // Default cone outer angle
-      //   coneOuterGain: 0, // Default cone outer gain
-      // });
-      // console.log("Adding Layer");
+      const canvasX = Math.round(
+        (layer.pos.x! / 100) * state.currentCanvas.canvasWidth -
+          state.currentCanvas.listenerWidth / 2
+      );
+
+      const canvasZ = Math.round(
+        (layer.pos.z! / 100) * state.currentCanvas.canvasHeight -
+          state.currentCanvas.listenerHeight / 2
+      );
 
       return {
         currentBlend: {
@@ -188,33 +183,22 @@ const usePlayerStore = create<PlayerStore>((set) => ({
               ? [...state.currentBlend.ambiLayers, layer]
               : state.currentBlend.ambiLayers,
         },
-        // currentCanvas: {
-        //   ...state.currentCanvas,
-        //   canvasCafe:
-        //     layerType === "cafe"
-        //       ? [
-        //           ...state.currentCanvas.canvasCafe,
-        //           {
-        //             id: layer.id,
-        //             x: canvasX,
-        //             y: layer.pos.y,
-        //             z: canvasZ,
-        //           },
-        //         ]
-        //       : state.currentCanvas.canvasCafe,
-        //   canvasAmbi:
-        //     layerType === "ambi"
-        //       ? [
-        //           ...state.currentCanvas.canvasAmbi,
-        //           {
-        //             id: layer.id,
-        //             x: canvasX,
-        //             y: layer.pos.y,
-        //             z: canvasZ,
-        //           },
-        //         ]
-        //       : state.currentCanvas.canvasAmbi,
-        // },
+        currentCanvas: {
+          ...state.currentCanvas,
+          canvasCafe:
+            layerType === "cafe"
+              ? [
+                  ...state.currentCanvas.canvasCafe,
+                  {
+                    name: layer.name,
+                    id: layer.id,
+                    x: canvasX,
+                    y: layer.pos.y,
+                    z: canvasZ,
+                  },
+                ]
+              : state.currentCanvas.canvasCafe,
+        },
         currentCafeHowl:
           layerType === "cafe"
             ? [...state.currentCafeHowl, { id: layer.id, howl: newHowl }]

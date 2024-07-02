@@ -107,21 +107,6 @@ const AddSound = ({ layerType }: Props) => {
                     <div className='badge badge-primary ml-2'>Nature</div>
                   </div>
                 ) : null}
-                {/* {option.isOutside ? (
-                  <div
-                    className='tooltip'
-                    data-tip='This sounds will be played from fixed location occasionally to simulate the real cafe enviornments'
-                  >
-                    <div className='badge badge-success ml-2'>Object</div>
-                  </div>
-                ) : (
-                  <div
-                    className='tooltip'
-                    data-tip='This sounds will be played from fixed location occasionally to simulate the real cafe enviornments'
-                  >
-                    <div className='badge badge-primary ml-2'>Ambience</div>
-                  </div>
-                )} */}
               </h1>
               <p className='text-sm font-light'>{option.desc}</p>
             </div>

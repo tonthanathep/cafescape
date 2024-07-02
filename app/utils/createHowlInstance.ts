@@ -3,13 +3,13 @@
 import { PlayerStore } from "../player/store";
 import { Howl } from "howler";
 import { createLowPass } from "./createSoundFilter";
-import { soundSourcesType } from "../data/soundSources";
+import { SoundSourcesType } from "../data/soundSources";
 
 interface SpriteMap {
   [key: string]: [number, number, boolean];
 }
 
-const createHowlInstance = (layer: soundSourcesType, state: PlayerStore) => {
+const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
   console.log("Creating Howl Instance for: ", layer.name);
   console.log("Sound Type: ", layer.renderType);
 
@@ -85,6 +85,7 @@ const createHowlInstance = (layer: soundSourcesType, state: PlayerStore) => {
 
   switch (layer.renderType) {
     case "cafe": {
+      console.log("cafe: ", layer);
       const NewHowl = new Howl({
         src: [layer.path],
         autoplay: true,
