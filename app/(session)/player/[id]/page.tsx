@@ -7,6 +7,7 @@ import { createClient } from "@/app/utils/supabase/client";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import AmbiSoundPanel from "../../../components/BlendPlayer/AmbiSound/AmbiSoundPanel";
@@ -68,7 +69,28 @@ const BlendPlayerPage = () => {
         console.log("not yet!");
       }
     };
-    createSession();
+
+    const checkOngoing = async () => {
+      await axios
+        .get("/api/session/ongoing")
+        .then((res) => {
+          if (res.data.isOngoing) {
+            (
+              document.getElementById("ongoing-exist") as HTMLDialogElement
+            ).showModal();
+            console.log("ongoing session found");
+          } else {
+            console.log("no ongoing session found");
+            createSession();
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+        });
+    };
+    if (update) {
+      checkOngoing();
+    }
   }, [update]);
 
   const fadeInVariants = {
@@ -114,6 +136,22 @@ const BlendPlayerPage = () => {
           <BlendDataDebugger />
         </div>
       </div>
+      <dialog id='ongoing-exist' className='modal'>
+        <div className='modal-box'>
+          <h3 className='font-bold text-lg'>Ongoing session exist</h3>
+
+          <p className='py-4'>Do you want to continue your previous session?</p>
+          <div className='modal-action'>
+            <form method='dialog'>
+              <button className='btn'>Continue Previous Session</button>
+              <button className='btn'>Abandon Old Session</button>
+              <Link href={`/`}>
+                <button className='btn'>Back</button>
+              </Link>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
