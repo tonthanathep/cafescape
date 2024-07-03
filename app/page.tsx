@@ -1,10 +1,10 @@
 import { getBackgroundImageUrl } from "./utils/getBackgroundImage";
 import Image from "next/image";
-import SuggestionCard from "./components/SuggestionCard";
 import GreetingHero from "./components/GreetingHero";
 import { createClient } from "./utils/supabase/server";
 import { redirect } from "next/navigation";
 import NewBlendButton from "./components/NewBlendButton";
+import BlendSuggestionPane from "./components/BlendSuggestionPane";
 
 export default async function Home() {
   const backgroundImageUrl = getBackgroundImageUrl();
@@ -31,8 +31,8 @@ export default async function Home() {
         <div className='relative flex flex-col w-full max-w-[65rem]'>
           <GreetingHero />
           <NewBlendButton btnTitle='+ Create' title='Create New Blend' />
-          <SuggestionCard title={"your own blend"} />
-          <SuggestionCard title={"your own blend"} />
+          <BlendSuggestionPane type='self' />
+          <BlendSuggestionPane type='discover' />
         </div>
       </div>
     </main>
