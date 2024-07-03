@@ -7,15 +7,18 @@ export interface SessionType {
   blends_uuid: string;
   created_at: string;
   duration: number;
-  status: "ongoing" | "ended";
+  status: "ongoing" | "ended" | "rated";
+  score: number;
 }
 
 export interface SessionStore {
   currentSession: SessionType;
   setSession: (sessionData: SessionType) => void;
+  setSessionId: (id: string) => void;
   setSessionBlend: (blends_uuid: string) => void;
-  updateDuration: (duration: number) => void;
-  endSession: () => void;
+  setSessionDuration: (duration: number) => void;
+  setSessionStatus: (status: "ended" | "rated") => void;
+  rateSession: (score: number) => void;
 }
 
 const useSessionStore = create<SessionStore>((set) => ({
@@ -26,6 +29,7 @@ const useSessionStore = create<SessionStore>((set) => ({
     created_at: "",
     duration: 0,
     status: "ongoing",
+    score: 0,
   },
   setSession: (sessionData) =>
     set((state) => ({
@@ -41,16 +45,31 @@ const useSessionStore = create<SessionStore>((set) => ({
         },
       };
     }),
-  updateDuration: (duration) =>
+  setSessionId: (id) =>
+    set((state) => ({
+      currentSession: {
+        ...state.currentSession,
+        id: id,
+      },
+    })),
+  setSessionDuration: (duration) =>
     set((state) => ({
       currentSession: {
         ...state.currentSession,
         duration: duration,
       },
     })),
-  endSession: () =>
+  setSessionStatus: (status) =>
     set((state) => ({
-      currentSession: { ...state.currentSession, status: "ended" },
+      currentSession: { ...state.currentSession, status: status },
+    })),
+  rateSession: (score) =>
+    set((state) => ({
+      currentSession: {
+        ...state.currentSession,
+        score: score,
+        status: "rated",
+      },
     })),
 }));
 

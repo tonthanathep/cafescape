@@ -1,31 +1,6 @@
 import { createClient } from "@/app/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-// Get Session Data
-export async function GET(req: NextRequest) {
-  let body;
-  try {
-    body = await req.json();
-  } catch (error) {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-  }
-
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from("sessions")
-    .select("*")
-    .eq("id", body.id)
-    .single();
-
-  if (error) {
-    console.error("Error fetching blend:", error);
-    return NextResponse.json({ error: "Blend not found" }, { status: 404 });
-  }
-
-  return NextResponse.json(data, { status: 200 });
-}
-
 // Create New Session Record
 export async function POST(req: NextRequest) {
   let body;
@@ -42,21 +17,27 @@ export async function POST(req: NextRequest) {
     created_at: undefined,
     owner_uuid: undefined,
   };
-
-  const { data, error } = await supabase.from("sessions").insert(newSession);
-
-  if (error) {
-    console.error("Error creating sessions:", error);
-    return NextResponse.json(
-      { error: "Failed to create session" },
-      { status: 500 }
-    );
+  const { data, error } = await supabase.auth.getUser();
+  if (data) {
+    const { data, error } = await supabase
+      .from("sessions")
+      .insert(newSession)
+      .select();
+    if (data) {
+      console.log("data: ", data);
+      return NextResponse.json(data, { status: 200 });
+    } else if (error) {
+      console.log(error);
+      return NextResponse.json(error, { status: 500 });
+    }
+  } else if (error) {
+    console.log("error", error);
   }
 
-  return NextResponse.json(data, { status: 201 });
+  return NextResponse.json(null, { status: 200 });
 }
 
-// Update Session Data
+// Update Session Data (For now only for ending session)
 export async function PUT(req: NextRequest) {
   let body;
   try {
@@ -66,10 +47,39 @@ export async function PUT(req: NextRequest) {
   }
 
   const supabase = createClient();
+  console.log(body);
 
   const { data, error } = await supabase
     .from("sessions")
     .update(body)
+    .eq("id", body.id)
+    .single();
+
+  if (error) {
+    console.error("Error updating session:", error);
+    return NextResponse.json(
+      { error: "Failed to update session" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json(data, { status: 200 });
+}
+
+// Abandon Session or Delete Session
+export async function DELETE(req: NextRequest) {
+  let body;
+  try {
+    body = await req.json();
+  } catch (error) {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const supabase = createClient();
+  console.log("delete", body);
+  const { data, error } = await supabase
+    .from("sessions")
+    .delete()
     .eq("id", body.id)
     .single();
 

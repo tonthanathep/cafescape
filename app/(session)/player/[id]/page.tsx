@@ -3,7 +3,6 @@ import CafeSoundPanel from "@/app/components/BlendPlayer/CafeSound/CafeSoundPane
 import usePlayerStore from "@/app/data/store/PlayerStore";
 import useSessionStore from "@/app/data/store/SessionStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
-import { createClient } from "@/app/utils/supabase/client";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -14,15 +13,15 @@ import AmbiSoundPanel from "../../../components/BlendPlayer/AmbiSound/AmbiSoundP
 import BlendDataDebugger from "../../../components/BlendPlayer/BlendDataDebugger";
 import BlendInfo from "../../../components/BlendPlayer/BlendInfo";
 
-const supabase = createClient();
-
 const BlendPlayerPage = () => {
   const { id } = useParams();
   const { currentBlend, setBlend, setBlendId } = usePlayerStore();
-  const { currentSession, setSessionBlend } = useSessionStore();
+  const { currentSession, setSessionBlend, setSessionId, setSession } =
+    useSessionStore();
   const backgroundImageUrl = getBackgroundImageUrl();
   const [refresh, setRefresh] = useState(0);
   const [update, setUpdate] = useState(false);
+  const [tempSessionId, setTempSessionId] = useState("");
 
   useEffect(() => {
     if (id !== currentBlend.id) {
@@ -60,8 +59,9 @@ const BlendPlayerPage = () => {
       if (update) {
         console.log("create session called");
         try {
-          const res = await axios.post("/api/session", currentSession);
-          console.log(res);
+          axios.post("/api/session", currentSession).then((res) => {
+            setSession(res.data[0]);
+          });
         } catch (error) {
           console.error("Error creating session:", error);
         }
@@ -75,6 +75,7 @@ const BlendPlayerPage = () => {
         .get("/api/session/ongoing")
         .then((res) => {
           if (res.data.isOngoing) {
+            setTempSessionId(res.data.session_uuid);
             (
               document.getElementById("ongoing-exist") as HTMLDialogElement
             ).showModal();
@@ -92,6 +93,19 @@ const BlendPlayerPage = () => {
       checkOngoing();
     }
   }, [update]);
+
+  const handleAbandon = () => {
+    // send axios put to delete session
+    axios
+      .delete("/api/session/", { data: { id: tempSessionId } })
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.href = "/";
+        } else {
+          console.log(res);
+        }
+      });
+  };
 
   const fadeInVariants = {
     hidden: { opacity: 0, scale: 1, y: 50 },
@@ -144,7 +158,14 @@ const BlendPlayerPage = () => {
           <div className='modal-action'>
             <form method='dialog'>
               <button className='btn'>Continue Previous Session</button>
-              <button className='btn'>Abandon Old Session</button>
+              <button
+                className='btn'
+                onClick={() => {
+                  handleAbandon();
+                }}
+              >
+                Abandon Old Session
+              </button>
               <Link href={`/`}>
                 <button className='btn'>Back</button>
               </Link>

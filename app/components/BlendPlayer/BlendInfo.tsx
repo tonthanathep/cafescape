@@ -1,17 +1,54 @@
 "use client";
 import usePlayerStore from "@/app/data/store/PlayerStore";
+import useSessionStore from "@/app/data/store/SessionStore";
 import { createClient } from "@/app/utils/supabase/client";
 import axios from "axios";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
 import NewBlendButton from "../NewBlendButton";
 
 const BlendInfo = () => {
+  const { currentSession, setSessionStatus, setSessionDuration } =
+    useSessionStore();
   const { currentBlend } = usePlayerStore();
   const supabase = createClient();
   const [isOwner, setOwner] = useState(false);
+  const [isSaved, setSaved] = useState(false);
+  const router = useRouter();
+
+  const handleAbandon = () => {
+    // send axios put to delete session
+    axios
+      .delete("/api/session/", { data: { id: currentSession.id } })
+      .then((res) => {
+        if (res.status === 200) {
+          useRouter().push("/");
+        } else {
+          console.log(res);
+        }
+      });
+  };
+
+  const handleFinish = () => {
+    // send axios put to update session status to finished
+    axios
+      .put("/api/session/", {
+        ...currentSession,
+        status: "ended",
+        duration: totalSeconds,
+        blends_uuid: currentBlend.id,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setSessionStatus("ended");
+          router.push("/finish?id=" + currentSession.id);
+        } else {
+          console.log(res);
+        }
+      });
+  };
 
   const handleSave = () => {
     const updateBlend = {
@@ -25,7 +62,7 @@ const BlendInfo = () => {
     axios
       .put("/api/blends/" + currentBlend.id, updateBlend)
       .then(function (response) {
-        console.log(response);
+        setSaved(true);
       });
   };
 
@@ -53,6 +90,10 @@ const BlendInfo = () => {
     pause,
     reset,
   } = useStopwatch({ autoStart: true });
+
+  useEffect(() => {
+    setSessionDuration(totalSeconds);
+  }, [totalSeconds]);
 
   return (
     <div className='card p-5 bg-white/0 flex flex-row gap-1'>
@@ -113,10 +154,16 @@ const BlendInfo = () => {
           <p className='py-4'>Do you want to quit this session?</p>
           <div className='modal-action'>
             <form method='dialog'>
-              {minutes > 0 && <button className='btn'>Finish Session</button>}
-              <Link href={`/`}>
-                <button className='btn'>Abandon Session</button>
-              </Link>
+              {minutes > 0 && (
+                <button className='btn' onClick={() => handleFinish()}>
+                  Finish Session
+                </button>
+              )}
+
+              <button className='btn' onClick={() => handleAbandon()}>
+                Abandon Session
+              </button>
+
               <button className='btn'>Back</button>
             </form>
           </div>

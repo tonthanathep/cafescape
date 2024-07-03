@@ -35,8 +35,6 @@ const BlendSuggestionPane = async ({ type }: Props) => {
       ? await supabase.from("blends").select("id, name, cafeLayers, ambiLayers")
       : null;
 
-  console.log("data: ", data);
-
   return (
     <div>
       <div className='backdrop-blur-2xl bg-white/30 drop-shadow-lg p-5 rounded-xl mt-5 '>

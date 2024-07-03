@@ -1,5 +1,6 @@
 "use client";
 import { Inconsolata } from "@next/font/google";
+import { SessionType } from "../data/store/SessionStore";
 import { BlendType } from "../data/type/playerType";
 
 const inconsolata = Inconsolata({
@@ -8,10 +9,10 @@ const inconsolata = Inconsolata({
 
 interface Props {
   blendData: BlendType;
-  sessionTime: number;
+  sessionData: SessionType;
 }
 
-const CafeReceipt = ({ blendData, sessionTime }: Props) => {
+const CafeReceipt = ({ blendData, sessionData }: Props) => {
   // Custom CSS styles
   const jaggedStyles = {
     receiptContainer: {
@@ -42,7 +43,7 @@ const CafeReceipt = ({ blendData, sessionTime }: Props) => {
   return (
     <div
       style={jaggedStyles.receiptContainer}
-      className={`${inconsolata.className} flex flex-col drop-shadow-md rotate-3 bg-slate-50 h-fit min-w-[15rem] p-3 pt-5 pb-5 rounded-sm justify-between gap-2`}
+      className={`${inconsolata.className} flex flex-col drop-shadow-md rotate-3 bg-amber-50 h-fit min-w-[15rem] p-3 pt-5 pb-5 rounded-sm justify-between gap-2`}
     >
       <div style={{ ...jaggedStyles.jagged, ...jaggedStyles.jaggedTop }}></div>
       <div className='flex flex-col items-center -space-y-1'>

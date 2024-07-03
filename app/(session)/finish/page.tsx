@@ -1,18 +1,61 @@
 "use client";
 import CafeReceipt from "@/app/components/CafeReceipt";
-import usePlayerStore from "@/app/data/store/PlayerStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
+import axios from "axios";
 import Image from "next/image";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { BlendType } from "../player/playerType";
 
 const Page = () => {
-  const { currentBlend } = usePlayerStore();
   const backgroundImageUrl = getBackgroundImageUrl();
   const [selectedOption, setSelectedOption] = useState("none");
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const router = useRouter();
+  const [sessionData, setSessionData] = useState({});
+  const [blendData, setBlendData] = useState({
+    owner: "",
+    id: "",
+    created_at: "",
+    name: "",
+    cafeLayers: [],
+    ambiLayers: [],
+    listenerPos: {},
+  });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleSelect = (value: string) => {
     setSelectedOption(value);
   };
+
+  useEffect(() => {
+    const fetchBlend = async (blends_uuid: string) => {
+      await axios.get("/api/blends/" + blends_uuid).then((res) => {
+        if (res.status === 200) {
+          console.log(res.data);
+          setBlendData(res.data);
+        } else {
+          console.log(res);
+        }
+      });
+    };
+
+    const fetchSession = async () => {
+      await axios.get("/api/session/" + id).then((res) => {
+        if (res.status === 200 && res.data.status === "ended") {
+          console.log(res.data);
+          setSessionData(res.data);
+          fetchBlend(res.data.blends_uuid);
+          setIsLoaded(true);
+        } else {
+          console.log(res);
+          router.push("/");
+        }
+      });
+    };
+    fetchSession();
+  }, [setIsLoaded]);
 
   return (
     <div className='relative min-h-screen flex items-center justify-center'>
@@ -98,24 +141,16 @@ const Page = () => {
               </div>
             </div>
           </div>
-          <div className='flex flex-row w-full gap-4'>
-            <div className='flex flex-col gap-2 w-full h-[6rem] bg-orange-200 rounded-xl'>
-              {" "}
-              Test{" "}
-            </div>
-            <div className='flex flex-col gap-2 w-full h-[6rem] bg-orange-200 rounded-xl'>
-              {" "}
-              Test{" "}
-            </div>
-            <div className='flex flex-col gap-2 w-full h-[6rem] bg-orange-200 rounded-xl'>
-              {" "}
-              Test{" "}
-            </div>
-          </div>
+          <div className='flex flex-row w-full gap-4'></div>
         </div>
         <div className='basis basis-1/5'>
           <div className='flex flex-col ml-20 items-center justify-center'>
-            <CafeReceipt blendData={currentBlend} />
+            {blendData.id !== "" && (
+              <CafeReceipt
+                blendData={blendData as BlendType}
+                sessionData={sessionData}
+              />
+            )}
           </div>
         </div>
       </div>
