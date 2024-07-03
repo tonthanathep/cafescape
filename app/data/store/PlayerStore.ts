@@ -22,6 +22,7 @@ export interface PlayerStore {
   ) => void;
   setCafeSoundPos: (layerId: number, x: number, y: number) => void;
   setVolume: (layerType: "cafe" | "ambi", id: number, volume: number) => void;
+  setBlendId: (blendId: string) => void;
 }
 
 //Clean and unloaded Howls instance before loading in new one
@@ -51,7 +52,7 @@ const updateAmbiSoundPositions = (state: PlayerStore) => {
 
 const usePlayerStore = create<PlayerStore>((set) => ({
   currentBlend: {
-    id: 1,
+    id: "",
     created_at: "",
     name: "My Blend",
     owner: undefined,
@@ -347,10 +348,19 @@ const usePlayerStore = create<PlayerStore>((set) => ({
         },
       };
     }),
+  setBlendId: (blendId) =>
+    set((state) => {
+      return {
+        currentBlend: {
+          ...state.currentBlend,
+          id: blendId,
+        },
+      };
+    }),
 }));
 
 if (process.env.NODE_ENV === "development") {
-  mountStoreDevtool("Store", usePlayerStore);
+  mountStoreDevtool("playerStore", usePlayerStore);
 }
 
 export default usePlayerStore;

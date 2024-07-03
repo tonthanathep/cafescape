@@ -1,8 +1,19 @@
+"use client";
+import CafeReceipt from "@/app/components/CafeReceipt";
+import usePlayerStore from "@/app/data/store/PlayerStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
 import Image from "next/image";
+import { useState } from "react";
 
 const Page = () => {
+  const { currentBlend } = usePlayerStore();
   const backgroundImageUrl = getBackgroundImageUrl();
+  const [selectedOption, setSelectedOption] = useState("none");
+
+  const handleSelect = (value: string) => {
+    setSelectedOption(value);
+  };
+
   return (
     <div className='relative min-h-screen flex items-center justify-center'>
       <div className='fixed top-0 left-0 w-full h-full blur-sm scale-105'>
@@ -13,6 +24,100 @@ const Page = () => {
           objectFit='cover'
           className='-z-10'
         />
+      </div>
+      <div className='relative flex flex-row bg-white rounded-2xl min-h-[40rem] items-center p-10 pt-8 gap-3 mt-[5rem] w-full max-w-[65rem]'>
+        <div className='basis basis-3/5'>
+          <div className='flex flex-col gap-2'>
+            <h1 className='text-4xl font-bold text-black/70'>
+              You're doing great! 🎉
+            </h1>
+            <p className='text-lg text-black/70'>
+              Don't forget to stay hydrate and get some fresh air
+            </p>
+          </div>
+          <div className='border-t-[1px] border-b-[1px] border-gray-200 mt-3 mb-3'>
+            <div className='flex flex-row justify-between items-end mt-5 mb-2'>
+              <h1 className='text-sm font-bold text-black/70'>
+                How was your session going?
+              </h1>
+              <h1 className='text-xs font-light text-orange-400'>
+                {selectedOption}
+              </h1>
+            </div>
+            {/* Rating Radio Input */}
+            <div className='flex flex-row gap-2 mb-5'>
+              <div
+                onClick={() => handleSelect("Can't focus at all")}
+                className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
+                  selectedOption === "Can't focus at all"
+                    ? "border-teal-600 border-2  bg-teal-100"
+                    : "border-gray-300"
+                }`}
+              >
+                <span className=''>1</span>
+              </div>
+              <div
+                onClick={() => handleSelect("Kind of focused")}
+                className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
+                  selectedOption === "Kind of focused"
+                    ? "border-amber-600 border-2  bg-amber-100"
+                    : "border-gray-300"
+                }`}
+              >
+                <span className=''>2</span>
+              </div>
+              <div
+                onClick={() => handleSelect("Not bad")}
+                className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
+                  selectedOption === "Not bad"
+                    ? "border-purple-600 border-2  bg-purple-100"
+                    : "border-gray-300"
+                }`}
+              >
+                <span className=''>3</span>
+              </div>
+              <div
+                onClick={() => handleSelect("Good session")}
+                className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
+                  selectedOption === "Good session"
+                    ? "border-purple-600 border-2  bg-purple-100"
+                    : "border-gray-300"
+                }`}
+              >
+                <span className=''>4</span>
+              </div>
+              <div
+                onClick={() => handleSelect("Awesome day!")}
+                className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
+                  selectedOption === "Awesome day!"
+                    ? "border-purple-600 border-2  bg-purple-100"
+                    : "border-gray-300"
+                }`}
+              >
+                <span className=''>5</span>
+              </div>
+            </div>
+          </div>
+          <div className='flex flex-row w-full gap-4'>
+            <div className='flex flex-col gap-2 w-full h-[6rem] bg-orange-200 rounded-xl'>
+              {" "}
+              Test{" "}
+            </div>
+            <div className='flex flex-col gap-2 w-full h-[6rem] bg-orange-200 rounded-xl'>
+              {" "}
+              Test{" "}
+            </div>
+            <div className='flex flex-col gap-2 w-full h-[6rem] bg-orange-200 rounded-xl'>
+              {" "}
+              Test{" "}
+            </div>
+          </div>
+        </div>
+        <div className='basis basis-1/5'>
+          <div className='flex flex-col ml-20 items-center justify-center'>
+            <CafeReceipt blendData={currentBlend} />
+          </div>
+        </div>
       </div>
     </div>
   );

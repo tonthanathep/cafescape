@@ -1,8 +1,14 @@
-import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Merriweather, Merriweather_Sans } from "next/font/google";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const merriweather = Merriweather({
+  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+});
+const merriweatherSans = Merriweather_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CafeScape Beta",
@@ -16,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={inter.className}>{children}</body>
+      <body className={merriweather.className}>{children}</body>
     </html>
   );
 }

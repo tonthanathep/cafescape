@@ -1,33 +1,75 @@
 "use client";
+import CafeSoundPanel from "@/app/components/BlendPlayer/CafeSound/CafeSoundPanel";
 import usePlayerStore from "@/app/data/store/PlayerStore";
+import useSessionStore from "@/app/data/store/SessionStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
 import { createClient } from "@/app/utils/supabase/client";
+import axios from "axios";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AmbiSoundPanel from "../../../components/BlendPlayer/AmbiSound/AmbiSoundPanel";
 import BlendDataDebugger from "../../../components/BlendPlayer/BlendDataDebugger";
 import BlendInfo from "../../../components/BlendPlayer/BlendInfo";
-import CafeSoundPanel from "../../../components/BlendPlayer/CafeSound/CafeSoundPanel";
 
 const supabase = createClient();
 
 const BlendPlayerPage = () => {
   const { id } = useParams();
-  const { setBlend } = usePlayerStore();
+  const { currentBlend, setBlend, setBlendId } = usePlayerStore();
+  const { currentSession, setSessionBlend } = useSessionStore();
   const backgroundImageUrl = getBackgroundImageUrl();
+  const [refresh, setRefresh] = useState(0);
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    if (id !== currentBlend.id) {
+      setBlendId(id as string);
+      setRefresh(refresh + 1);
+      console.log("update id: ", refresh, id);
+    }
+  }, [id]);
 
   useEffect(() => {
     const fetchBlend = async () => {
-      const res = await fetch("/api/blends/" + id);
-      if (res) {
-        const blends = await res.json();
-        setBlend(blends);
+      try {
+        const res = await fetch("/api/blends/" + id);
+        if (res.ok) {
+          const blends = await res.json();
+          if (blends) {
+            setBlend(blends);
+            setSessionBlend(blends.id);
+            setUpdate(true);
+          }
+        } else {
+          console.error("Failed to fetch blend data");
+        }
+      } catch (error) {
+        console.error("Error fetching blend data:", error);
       }
     };
+
+    console.log("refresh", id);
     fetchBlend();
-  }, [id]);
+  }, [setRefresh]);
+
+  useEffect(() => {
+    const createSession = async () => {
+      if (update) {
+        console.log("create session called");
+        try {
+          const res = await axios.post("/api/session", currentSession);
+          console.log(res);
+        } catch (error) {
+          console.error("Error creating session:", error);
+        }
+      } else {
+        console.log("not yet!");
+      }
+    };
+    createSession();
+  }, [update]);
 
   const fadeInVariants = {
     hidden: { opacity: 0, scale: 1, y: 50 },

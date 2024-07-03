@@ -1,16 +1,11 @@
 import usePlayerStore from "@/app/data/store/PlayerStore";
-import { useRef } from "react";
 import AddSound from "../AddSound";
 import CafeSoundNode from "./CafeSoundNode";
 import SpatialCanvas from "./SpatialCanvas";
 
 const CafeSoundPanel = () => {
   // Reducer for managing sounds layers
-  const { currentBlend, currentCafeHowl } = usePlayerStore();
-
-  // Reference for Howls State
-  const howlsCafeRef = useRef({});
-
+  const { currentBlend } = usePlayerStore();
   const excludeIds = Object.entries(currentBlend.cafeLayers).map(
     ([key, list]) => list.id
   );

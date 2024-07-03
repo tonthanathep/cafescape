@@ -8,7 +8,7 @@ export interface listenerPos {
 
 export interface BlendType {
   owner: any;
-  id: number;
+  id: string;
   created_at: string;
   name: string;
   cafeLayers: SoundSourcesType[];

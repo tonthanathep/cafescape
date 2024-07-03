@@ -39,7 +39,7 @@ const BlendInfo = () => {
       }
     };
     checkOwner();
-  }, [currentBlend]);
+  }, [currentBlend.id]);
 
   //Stopwatch
   const {
