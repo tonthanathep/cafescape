@@ -278,7 +278,6 @@ const usePlayerStore = create<PlayerStore>((set) => ({
         currentCanvas: {
           ...state.currentCanvas,
           canvasListener: { x, y: 0, z },
-          canvasAmbi: updateCanvasAmbi,
         },
         currentBlend: {
           ...state.currentBlend,

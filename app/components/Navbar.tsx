@@ -6,7 +6,7 @@ import Clock from "react-live-clock";
 const Navbar = () => {
   return (
     <div className='fixed z-50 w-full'>
-      <div className='flex navbar justify-between pt-4 items-center mx-auto w-full max-w-[65rem]'>
+      <div className='flex navbar justify-between pt-4 items-center mx-auto w-full pl-8 pr-4'>
         <div className='navbar-start'>
           <Link href={"/"}>
             <h1 className='text-xl font-bold text-white shadow-2xl'>

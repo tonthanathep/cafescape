@@ -14,7 +14,7 @@ const fadeInVariants = {
 };
 
 const CafeSoundNode = ({ id, name }: Props) => {
-  const { currentCanvas, deleteLayer, setVolume } = usePlayerStore();
+  const { deleteLayer, setVolume } = usePlayerStore();
 
   // Find the correct Howl instance by id
   const howlInstance = getHowlInstance("cafe", id);
