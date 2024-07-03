@@ -1,6 +1,5 @@
-import React, { RefObject, useEffect } from "react";
-import { Howl } from "howler";
-import usePlayerStore from "@/app/player/store";
+import usePlayerStore from "@/app/data/store/PlayerStore";
+import React from "react";
 import getHowlInstance from "../../../utils/getHowlInstance";
 
 interface Props {

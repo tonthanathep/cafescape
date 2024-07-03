@@ -1,10 +1,7 @@
 "use client";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { login, signup } from "../login/action";
-import React from "react";
-import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { login } from "../(auth)/login/action";
 
 const LoginPane = () => {
   return (

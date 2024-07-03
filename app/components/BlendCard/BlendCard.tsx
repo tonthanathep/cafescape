@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Link from "next/link";
 import Cup from "../icons/Cup";
 import Leaf from "../icons/Leaf";
@@ -18,7 +17,7 @@ const BlendCard = ({ name, id, layerType }: Props) => {
         className='relative transform transition-all shadow-lg duration-500 group-hover:shadow-2xl group-hover:scale-105'
         key={id}
       >
-        <div className='flex flex-col w-[10rem] rounded-xl bg-white text-gray-800 pt-5 pb-1 pl-3 pr-3 aspect-square'>
+        <div className='flex flex-col rounded-xl bg-white text-gray-800 pt-5 pb-1 pl-3 pr-3 aspect-square'>
           <div className='flex space-x-2 opacity-70'>
             {layerType.isCafe && (
               <span>

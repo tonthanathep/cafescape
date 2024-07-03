@@ -1,9 +1,9 @@
-import { create } from "zustand";
 import { Howl } from "howler";
 import { mountStoreDevtool } from "simple-zustand-devtools";
-import { BlendType, CanvasType } from "./playerType";
-import createHowlInstance from "../utils/createHowlInstance";
-import { SoundSourcesType } from "../data/soundSources";
+import { create } from "zustand";
+import { BlendType, CanvasType } from "../../(session)/player/playerType";
+import createHowlInstance from "../../utils/createHowlInstance";
+import { SoundSourcesType } from "../sources/soundSources";
 
 export interface PlayerStore {
   currentCanvas: CanvasType;

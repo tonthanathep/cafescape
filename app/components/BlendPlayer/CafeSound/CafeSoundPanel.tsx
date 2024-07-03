@@ -1,9 +1,8 @@
-import React, { useReducer, useRef } from "react";
-import SpatialCanvas from "./SpatialCanvas";
-import CafeSoundNode from "./CafeSoundNode";
-import cafeSoundSources from "./CafeSoundSources";
+import usePlayerStore from "@/app/data/store/PlayerStore";
+import { useRef } from "react";
 import AddSound from "../AddSound";
-import usePlayerStore from "@/app/player/store";
+import CafeSoundNode from "./CafeSoundNode";
+import SpatialCanvas from "./SpatialCanvas";
 
 const CafeSoundPanel = () => {
   // Reducer for managing sounds layers
@@ -21,7 +20,7 @@ const CafeSoundPanel = () => {
       <div className='flex flex-col gap-2'>
         <div className='flex flex-row justify-between'>
           <h1 className='text-m font-light'>Elements</h1>
-          <AddSound soundOptions={cafeSoundSources} layerType='cafe' />
+          <AddSound layerType='cafe' />
         </div>
         <div className='flex flex-col p-2 gap-y-1 bg-slate-300/20 rounded-2xl outline-1'>
           {excludeIds.length === 0 ? (

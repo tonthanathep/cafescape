@@ -1,5 +1,4 @@
-import React from "react";
-import usePlayerStore from "../../player/store";
+import usePlayerStore from "@/app/data/store/PlayerStore";
 
 const BlendDataDebugger = () => {
   const { currentBlend, currentCanvas } = usePlayerStore();
@@ -15,7 +14,7 @@ const BlendDataDebugger = () => {
         Listener (Howler)
       </div>
       <p>
-        x: {currentBlend.listenerPos.x} %, y: {currentBlend.listenerPos.y} %
+        x: {currentBlend.listenerPos.x} %, y: {currentBlend.listenerPos.z} %
       </p>
       <div className='divider divider-info divider-start'>Cafe Layers</div>
       {Object.entries(currentBlend.cafeLayers).map(([key, layers]) => (
@@ -42,7 +41,7 @@ const BlendDataDebugger = () => {
         <p className='text-[0.8rem] font-light opacity-55'>Debugging Windows</p>
         <p className='text-sm'>
           Current Position: x: {currentCanvas.canvasListener.x}, y:{" "}
-          {currentCanvas.canvasListener.y}
+          {currentCanvas.canvasListener.z}
         </p>
         <p className='text-sm'>
           Size W: {currentCanvas.canvasWidth}, H: {currentCanvas.canvasHeight}

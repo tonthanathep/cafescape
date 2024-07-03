@@ -1,9 +1,8 @@
 // createHowlInstance.ts
-
-import { PlayerStore } from "../player/store";
 import { Howl } from "howler";
+import { SoundSourcesType } from "../data/sources/soundSources";
+import { PlayerStore } from "../data/store/PlayerStore";
 import { createLowPass } from "./createSoundFilter";
-import { SoundSourcesType } from "../data/soundSources";
 
 interface SpriteMap {
   [key: string]: [number, number, boolean];

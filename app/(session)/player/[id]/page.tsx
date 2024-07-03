@@ -1,15 +1,15 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import Image from "next/image";
-import { createClient } from "@/app/utils/supabase/client";
-import CafeSoundPanel from "../../components/BlendPlayer/CafeSound/CafeSoundPanel";
-import BlendInfo from "../../components/BlendPlayer/BlendInfo";
-import BlendDataDebugger from "../../components/BlendPlayer/BlendDataDebugger";
-import AmbiSoundPanel from "../../components/BlendPlayer/AmbiSound/AmbiSoundPanel";
-import usePlayerStore from "@/app/player/store";
+import usePlayerStore from "@/app/data/store/PlayerStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
+import { createClient } from "@/app/utils/supabase/client";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import AmbiSoundPanel from "../../../components/BlendPlayer/AmbiSound/AmbiSoundPanel";
+import BlendDataDebugger from "../../../components/BlendPlayer/BlendDataDebugger";
+import BlendInfo from "../../../components/BlendPlayer/BlendInfo";
+import CafeSoundPanel from "../../../components/BlendPlayer/CafeSound/CafeSoundPanel";
 
 const supabase = createClient();
 

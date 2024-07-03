@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import usePlayerStore from "@/app/player/store";
-import getHowlInstance from "../../../utils/getHowlInstance";
+import usePlayerStore from "@/app/data/store/PlayerStore";
 import { motion } from "framer-motion";
+import React from "react";
+import getHowlInstance from "../../../utils/getHowlInstance";
 
 interface Props {
   id: number;

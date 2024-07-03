@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import usePlayerStore from "@/app/data/store/PlayerStore";
+import { motion } from "framer-motion";
+import { Howler } from "howler"; // Ensure Howler is imported
+import { useEffect, useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import useMeasure from "react-use-measure";
-import usePlayerStore from "@/app/player/store";
-import { Howler } from "howler"; // Ensure Howler is imported
-import { motion } from "framer-motion";
 
 const SpatialCanvas = () => {
   const { currentBlend, currentCanvas, setListenerPos, setCanvas } =

@@ -1,7 +1,6 @@
-import React from "react";
-import AmbiSoundNode from "./AmbiSoundNode";
+import usePlayerStore from "@/app/data/store/PlayerStore";
 import AddSound from "../AddSound";
-import usePlayerStore from "@/app/player/store";
+import AmbiSoundNode from "./AmbiSoundNode";
 
 const AmbiSoundPanel = () => {
   const { currentBlend } = usePlayerStore();

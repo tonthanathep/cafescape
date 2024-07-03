@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import usePlayerStore from "../player/store";
 import axios from "axios";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import usePlayerStore from "../data/store/PlayerStore";
 
 interface Props {
   btnTitle: string;

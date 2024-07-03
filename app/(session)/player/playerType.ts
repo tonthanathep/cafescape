@@ -1,4 +1,4 @@
-import { SoundSourcesType } from "../data/soundSources";
+import { SoundSourcesType } from "../../data/sources/soundSources";
 
 export interface listenerPos {
   //x,z horizontal y vertical

@@ -1,10 +1,9 @@
-import { getBackgroundImageUrl } from "./utils/getBackgroundImage";
 import Image from "next/image";
-import GreetingHero from "./components/GreetingHero";
-import { createClient } from "./utils/supabase/server";
 import { redirect } from "next/navigation";
-import NewBlendButton from "./components/NewBlendButton";
-import BlendSuggestionPane from "./components/BlendSuggestionPane";
+import BlendSuggestionPane from "../components/BlendSuggestionPane";
+import GreetingHero from "../components/GreetingHero";
+import { getBackgroundImageUrl } from "../utils/getBackgroundImage";
+import { createClient } from "../utils/supabase/server";
 
 export default async function Home() {
   const backgroundImageUrl = getBackgroundImageUrl();
@@ -28,9 +27,8 @@ export default async function Home() {
             className='-z-10 blur-sm scale-105'
           />
         </div>
-        <div className='relative flex flex-col w-full max-w-[65rem]'>
+        <div className='relative flex flex-col w-full max-w-[65rem] mb-[3rem]'>
           <GreetingHero />
-          <NewBlendButton btnTitle='+ Create' title='Create New Blend' />
           <BlendSuggestionPane type='self' />
           <BlendSuggestionPane type='discover' />
         </div>

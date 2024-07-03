@@ -1,7 +1,5 @@
-import React from "react";
-import Image from "next/image";
-import { getBackgroundImageUrl } from "../utils/getBackgroundImage";
-import LoginPane from "../components/LoginPane";
+import LoginPane from "@/app/components/LoginPane";
+import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
 
 const Page = () => {
   const backgroundImageUrl = getBackgroundImageUrl();

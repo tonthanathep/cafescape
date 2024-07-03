@@ -1,4 +1,3 @@
-import React from "react";
 import { createClient } from "../utils/supabase/server";
 import BlendCard from "./BlendCard/BlendCard";
 
@@ -41,12 +40,12 @@ const BlendSuggestionPane = async ({ type }: Props) => {
   return (
     <div>
       <div className='backdrop-blur-2xl bg-white/30 drop-shadow-lg p-5 rounded-xl mt-5 '>
-        <p className='text-m font-regular text-white mt-2 opacity-60'>
+        <p className='text-m font-light text-white mt-1 opacity-60'>
           suggestion
         </p>
         <p className='text-2xl font-medium text-white mb-4'>{title}</p>
         <div className=''>
-          <span className='inline-grid grid-cols-4 gap-4'>
+          <span className='w-full inline-grid grid-cols-6 gap-4'>
             {data.map((list: any) => {
               const isCafe = list.cafeLayers.length > 0;
               const isNoise = list.ambiLayers.some(

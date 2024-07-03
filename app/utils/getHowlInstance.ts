@@ -1,4 +1,4 @@
-import usePlayerStore from "@/app/player/store";
+import usePlayerStore from "@/app/data/store/PlayerStore";
 
 const getHowlInstance = (
   type: "cafe" | "ambi",

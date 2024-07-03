@@ -1,12 +1,12 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import { useStopwatch } from "react-timer-hook";
-import usePlayerStore from "@/app/player/store";
+import usePlayerStore from "@/app/data/store/PlayerStore";
+import { createClient } from "@/app/utils/supabase/client";
 import axios from "axios";
 import Link from "next/link";
-import NewBlendButton from "../NewBlendButton";
-import { createClient } from "@/app/utils/supabase/client";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useStopwatch } from "react-timer-hook";
+import NewBlendButton from "../NewBlendButton";
 
 const BlendInfo = () => {
   const { currentBlend } = usePlayerStore();
@@ -99,45 +99,51 @@ const BlendInfo = () => {
           </div>
         </dialog>
       </div>
-      <div>
-        <dialog id='confirm_exit' className='modal'>
-          <div className='modal-box'>
-            <h3 className='font-bold text-lg'>Leaving Session</h3>
-            <p className='py-4'>Do you want to quit this session?</p>
-            <div className='modal-action'>
-              <form method='dialog'>
-                <Link href={`/`}>
-                  <button className='btn'>Yes</button>
-                </Link>
-                <button className='btn'>No</button>
-              </form>
-            </div>
-          </div>
-        </dialog>
-      </div>
-      <div>
-        <dialog id='share' className='modal'>
-          <div className='modal-box'>
+
+      <dialog id='confirm_exit' className='modal'>
+        <div className='modal-box'>
+          {minutes > 0 ? (
             <h3 className='font-bold text-lg'>
-              Share this Blend with your friends
+              You have been working for {minutes} minutes!
             </h3>
-            <input
-              type='text'
-              className='input w-full'
-              value={"http://cafescape.com" + usePathname()}
-              aria-readonly
-            />
-            <div className='modal-action'>
-              <form method='dialog'>
-                <Link href={`/`}>
-                  <button className='btn'>Copy to Clipboard</button>
-                </Link>
-                <button className='btn'>No</button>
-              </form>
-            </div>
+          ) : (
+            <h3 className='font-bold text-lg'>Ending session</h3>
+          )}
+
+          <p className='py-4'>Do you want to quit this session?</p>
+          <div className='modal-action'>
+            <form method='dialog'>
+              {minutes > 0 && <button className='btn'>Finish Session</button>}
+              <Link href={`/`}>
+                <button className='btn'>Abandon Session</button>
+              </Link>
+              <button className='btn'>Back</button>
+            </form>
           </div>
-        </dialog>
-      </div>
+        </div>
+      </dialog>
+
+      <dialog id='share' className='modal'>
+        <div className='modal-box'>
+          <h3 className='font-bold text-lg'>
+            Share this Blend with your friends
+          </h3>
+          <input
+            type='text'
+            className='input w-full'
+            value={"http://cafescape.com" + usePathname()}
+            aria-readonly
+          />
+          <div className='modal-action'>
+            <form method='dialog'>
+              <Link href={`/`}>
+                <button className='btn'>Copy to Clipboard</button>
+              </Link>
+              <button className='btn'>No</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
 
       <div
         className='btn btn-primary'

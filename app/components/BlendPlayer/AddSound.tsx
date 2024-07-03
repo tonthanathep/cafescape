@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
-import usePlayerStore from "@/app/player/store";
-import soundSources from "../../data/soundSources";
+import soundSources from "@/app/data/sources/soundSources";
+import usePlayerStore from "@/app/data/store/PlayerStore";
 
 interface Props {
   layerType: "ambi" | "cafe";
