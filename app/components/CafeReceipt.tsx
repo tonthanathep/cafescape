@@ -1,15 +1,13 @@
 "use client";
 import { Inconsolata } from "@next/font/google";
-import { SessionType } from "../data/store/SessionStore";
-import { BlendType } from "../data/type/playerType";
 
 const inconsolata = Inconsolata({
   subsets: ["latin"],
 });
 
 interface Props {
-  blendData: BlendType;
-  sessionData: SessionType;
+  blendData: {};
+  sessionData: {};
 }
 
 const CafeReceipt = ({ blendData, sessionData }: Props) => {

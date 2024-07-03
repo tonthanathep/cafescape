@@ -5,11 +5,10 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BlendType } from "../player/playerType";
 
 const Page = () => {
   const backgroundImageUrl = getBackgroundImageUrl();
-  const [selectedOption, setSelectedOption] = useState("none");
+  const [selectedOption, setSelectedOption] = useState(0);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
@@ -24,10 +23,56 @@ const Page = () => {
     listenerPos: {},
   });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [ratingDesc, setRatingDesc] = useState("");
 
-  const handleSelect = (value: string) => {
+  const handleSelect = (value: number) => {
     setSelectedOption(value);
   };
+
+  const handleSubmit = async () => {
+    if (selectedOption !== 0) {
+      await axios
+        .put("/api/session/", {
+          ...sessionData,
+          id: sessionData.id,
+          status: "rated",
+          score: selectedOption,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res.data);
+            router.push("/");
+          } else {
+            console.log(res);
+          }
+        });
+    } else {
+      console.log("Please select one of the rating");
+    }
+  };
+
+  useEffect(() => {
+    switch (selectedOption) {
+      case 1:
+        setRatingDesc("Terrible");
+        break;
+      case 2:
+        setRatingDesc("Bad");
+        break;
+      case 3:
+        setRatingDesc("Average");
+        break;
+      case 4:
+        setRatingDesc("Good");
+        break;
+      case 5:
+        setRatingDesc("Excellent");
+        break;
+      default:
+        setRatingDesc("");
+        break;
+    }
+  }, [selectedOption]);
 
   useEffect(() => {
     const fetchBlend = async (blends_uuid: string) => {
@@ -84,15 +129,15 @@ const Page = () => {
                 How was your session going?
               </h1>
               <h1 className='text-xs font-light text-orange-400'>
-                {selectedOption}
+                {ratingDesc}
               </h1>
             </div>
             {/* Rating Radio Input */}
             <div className='flex flex-row gap-2 mb-5'>
               <div
-                onClick={() => handleSelect("Can't focus at all")}
+                onClick={() => handleSelect(1)}
                 className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
-                  selectedOption === "Can't focus at all"
+                  selectedOption === 1
                     ? "border-teal-600 border-2  bg-teal-100"
                     : "border-gray-300"
                 }`}
@@ -100,9 +145,9 @@ const Page = () => {
                 <span className=''>1</span>
               </div>
               <div
-                onClick={() => handleSelect("Kind of focused")}
+                onClick={() => handleSelect(2)}
                 className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
-                  selectedOption === "Kind of focused"
+                  selectedOption === 2
                     ? "border-amber-600 border-2  bg-amber-100"
                     : "border-gray-300"
                 }`}
@@ -110,9 +155,9 @@ const Page = () => {
                 <span className=''>2</span>
               </div>
               <div
-                onClick={() => handleSelect("Not bad")}
+                onClick={() => handleSelect(3)}
                 className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
-                  selectedOption === "Not bad"
+                  selectedOption === 3
                     ? "border-purple-600 border-2  bg-purple-100"
                     : "border-gray-300"
                 }`}
@@ -120,9 +165,9 @@ const Page = () => {
                 <span className=''>3</span>
               </div>
               <div
-                onClick={() => handleSelect("Good session")}
+                onClick={() => handleSelect(4)}
                 className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
-                  selectedOption === "Good session"
+                  selectedOption === 4
                     ? "border-purple-600 border-2  bg-purple-100"
                     : "border-gray-300"
                 }`}
@@ -130,9 +175,9 @@ const Page = () => {
                 <span className=''>4</span>
               </div>
               <div
-                onClick={() => handleSelect("Awesome day!")}
+                onClick={() => handleSelect(5)}
                 className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
-                  selectedOption === "Awesome day!"
+                  selectedOption === 5
                     ? "border-purple-600 border-2  bg-purple-100"
                     : "border-gray-300"
                 }`}
@@ -141,15 +186,16 @@ const Page = () => {
               </div>
             </div>
           </div>
-          <div className='flex flex-row w-full gap-4'></div>
+          <div className='flex flex-row w-full gap-4'>
+            <div className='btn' onClick={() => handleSubmit()}>
+              Send
+            </div>
+          </div>
         </div>
         <div className='basis basis-1/5'>
           <div className='flex flex-col ml-20 items-center justify-center'>
             {blendData.id !== "" && (
-              <CafeReceipt
-                blendData={blendData as BlendType}
-                sessionData={sessionData}
-              />
+              <CafeReceipt blendData={blendData} sessionData={sessionData} />
             )}
           </div>
         </div>

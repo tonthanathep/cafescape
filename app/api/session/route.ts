@@ -47,7 +47,7 @@ export async function PUT(req: NextRequest) {
   }
 
   const supabase = createClient();
-  console.log(body);
+  console.log("update body", body);
 
   const { data, error } = await supabase
     .from("sessions")
