@@ -1,3 +1,4 @@
+import { createClient } from "../utils/supabase/server";
 import NewBlendButton from "./NewBlendButton";
 
 var user = {
@@ -6,7 +7,18 @@ var user = {
 
 const today = new Date();
 
-const GreetingHero = () => {
+const GreetingHero = async () => {
+  const supabase = createClient();
+  await supabase.auth.getUser().then(async (data) => {
+    await supabase
+      .from("profiles")
+      .select("nick_name")
+      .eq("id", data.data.user.id)
+      .then((data) => {
+        user.name = data.data[0].nick_name;
+      });
+  });
+
   return (
     <div className='mt-[12rem] flex flex-row items-end justify-between'>
       <div className='flex flex-col gap-1'>

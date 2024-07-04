@@ -24,7 +24,7 @@ const BlendInfo = () => {
       .delete("/api/session/", { data: { id: currentSession.id } })
       .then((res) => {
         if (res.status === 200) {
-          useRouter().push("/");
+          router.push("/");
         } else {
           console.log(res);
         }

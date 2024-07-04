@@ -35,7 +35,8 @@ export async function updateSession(request: NextRequest) {
 
   const { data: user, error } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (user) {
+  } else if (!user) {
     // no user, potentially respond by redirecting the user to the login page
     return NextResponse.redirect("/login");
   }

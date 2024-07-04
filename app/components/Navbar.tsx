@@ -1,8 +1,45 @@
 "use client";
+import { useEffect } from "react";
 import Clock from "react-live-clock";
+import useUserStore from "../data/store/UserStore";
+import { createClient } from "../utils/supabase/client";
 import SiteLogo from "./SiteLogo";
 
 const Navbar = () => {
+  const { setCurrentUser, setCurrentProfile, currentUser } = useUserStore();
+
+  //fetch data
+
+  const supabase = createClient();
+
+  let userData;
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", userData.id)
+        .then((data) => {
+          setCurrentProfile(data.data[0]);
+        });
+    };
+
+    const fetchUserData = async () => {
+      await supabase.auth
+        .getUser()
+        .then((data) => {
+          userData = data.data.user;
+          setCurrentUser(userData);
+          fetchUserProfile();
+        })
+        .catch((error) => {
+          console.log("error: ", error);
+        });
+    };
+    fetchUserData();
+  }, []);
+
   const today = new Date();
   return (
     <div className='fixed z-50 w-full'>
@@ -17,7 +54,7 @@ const Navbar = () => {
           </div>
           <div className='flex flex-row  gap-2 pt-4 pb-4 pr-6 pl-6 drop-shadow-2xl bg-white rounded-2xl'>
             <h1 className='text-sm font-medium text-black mr-3'>
-              Welcome, Thanathep!
+              Welcome, {currentUser?.user_profile.nick_name}
             </h1>
             <h1 className='text-sm font-medium text-black'>
               {" "}
