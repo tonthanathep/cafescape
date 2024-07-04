@@ -1,7 +1,7 @@
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch } from "react";
-import { login } from "../(auth)/login/action";
+import { signup } from "../(auth)/login/action";
 
 interface Props {
   setState: Dispatch<boolean>;
@@ -36,7 +36,7 @@ const SignupForm = ({ setState }: Props) => {
             />
           </label>
           <div className='flex flex-col'>
-            <button className='btn btn-outline btn-mda' formAction={login}>
+            <button className='btn btn-outline btn-mda' formAction={signup}>
               Sign up
             </button>
           </div>

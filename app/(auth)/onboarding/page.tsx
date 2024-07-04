@@ -1,16 +1,25 @@
-import React from 'react'
+import OnboardingPane from "@/app/components/OnboardingPane";
+import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
+import Image from "next/image";
 
-const onboarding = () => {
+const Page = () => {
+  const backgroundImageUrl = getBackgroundImageUrl();
   return (
-    <div className='card bg-white w-80 p-10 shadow-lg rounded-lg align-e'>
-        <div>
-            <h1>Welcome to CafeScape!</h1>
-        
-            Welcome to our application that is very awesome!
-            <button className='btn btn-primary'> Next! </button>
-        </div>
+    <div className='flex items-center justify-center min-h-screen'>
+      <div className='fixed top-0 left-0 w-full h-full'>
+        <Image
+          src={backgroundImageUrl}
+          alt='Cover Image'
+          layout='fill'
+          objectFit='cover'
+          className='-z-10 blur-sm scale-105'
+        />
+      </div>
+      <div className='flex flex-row'>
+        <OnboardingPane />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default onboarding
+export default Page;
