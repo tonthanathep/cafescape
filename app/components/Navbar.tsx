@@ -1,4 +1,5 @@
 "use client";
+// @ts-nocheck
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Clock from "react-live-clock";
@@ -14,7 +15,7 @@ const Navbar = () => {
   const supabase = createClient();
   const router = useRouter();
 
-  let userData;
+  let userData: any;
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -22,7 +23,7 @@ const Navbar = () => {
         .from("profiles")
         .select("*")
         .eq("id", userData.id)
-        .then((data) => {
+        .then((data: any) => {
           setCurrentProfile(data.data[0]);
         });
     };

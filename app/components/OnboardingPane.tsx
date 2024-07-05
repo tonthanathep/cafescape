@@ -104,7 +104,7 @@ const OnboardingPane = () => {
               <div className='flex flex-row gap-2'>
                 <div
                   onClick={() => setSelectedOption(2)}
-                  className={`cursor-pointer p-2 w-full border border-2 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
+                  className={`cursor-pointer p-2 w-full border-2 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
                     selectedOption === 2
                       ? "border-teal-600 border-2  bg-teal-100"
                       : "border-gray-300"
