@@ -9,6 +9,8 @@ interface Props {
 const AddSound = ({ layerType }: Props) => {
   const { currentBlend, addLayer } = usePlayerStore();
 
+  const limit = layerType === "cafe" ? 4 : 3;
+
   const availableOptions = () => {
     if (layerType === "cafe") {
       const existingIds = currentBlend.cafeLayers.map((sound) => sound.id);
@@ -46,14 +48,19 @@ const AddSound = ({ layerType }: Props) => {
   const options = availableOptions();
 
   return (
-    <div className='dropdown dropdown-end'>
-      {options.existingSounds.length === 3 ? (
+    <div
+      className={`dropdown dropdown-end ${
+        layerType === "cafe" ? "dropdown-top" : "dropdown-bottom"
+      }`}
+    >
+      {options.existingSounds.length === limit ? (
         <div
           tabIndex={0}
           role='button'
           className='btn btn-outline btn-disabled btn-sm mb-1 rounded-3xl'
         >
-          + Add Sound ({options.existingSounds.length}/3)
+          {layerType === "cafe" ? "+ Add Sound" : "+"} (
+          {options.existingSounds.length}/{limit})
         </div>
       ) : (
         <div
@@ -61,7 +68,8 @@ const AddSound = ({ layerType }: Props) => {
           role='button'
           className='btn btn-outline btn-primary btn-sm mb-1 rounded-3xl'
         >
-          + Add Sound ({options.existingSounds.length}/3)
+          {layerType === "cafe" ? "+ Add Sound" : "+"} (
+          {options.existingSounds.length}/{limit})
         </div>
       )}
       <div className='join join-vertical dropdown-content rounded-2xl z-[1]'>

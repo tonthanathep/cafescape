@@ -1,7 +1,6 @@
 import usePlayerStore from "@/app/data/store/PlayerStore";
 import AddSound from "../AddSound";
 import CafeSoundNode from "./CafeSoundNode";
-import SpatialCanvas from "./SpatialCanvas";
 
 const CafeSoundPanel = () => {
   // Reducer for managing sounds layers
@@ -11,32 +10,25 @@ const CafeSoundPanel = () => {
   );
 
   return (
-    <div className='card w-full bg-white p-5 shadow-sm'>
-      <div className='flex flex-col gap-2'>
-        <div className='flex flex-row justify-between'>
-          <h1 className='text-m font-light'>Elements</h1>
-          <AddSound layerType='cafe' />
-        </div>
-        <div className='flex flex-col p-2 gap-y-1 bg-slate-300/20 rounded-2xl outline-1'>
+    <div>
+      <div className='flex flex-row items-center justify-between pl-4 pr-4 pb-1'>
+        <h1 className='text-xl font-bold'>Cafe</h1>
+        <AddSound layerType='cafe' />
+      </div>
+      <div className='card w-full p-3 bg-white/45 backdrop-blur-md shadow-sm'>
+        <div className='flex flex-col gap-2'>
           {excludeIds.length === 0 ? (
-            <div className='w-full h-28 content-center'>
-              <h1 className='font-light text-sm text-black/20'>
-                {" "}
+            <div className='w-[40rem] flex content-center justify-center'>
+              <h1 className='font-light h-[5rem] text-sm mt-16 text-black/20'>
                 Press "+ Add Sound" to start
               </h1>
             </div>
           ) : null}
-          <div className='grid grid-cols-4 gap-x-3 rounded-2xl outline-1'>
+          <div className='w-[40rem] grid grid-cols-4 gap-x-3'>
             {currentBlend.cafeLayers.map((list) => (
               <CafeSoundNode id={list.id} name={list.name} />
             ))}
           </div>
-        </div>
-        <div className='divider divider-start'>
-          <p className='text-l font-light text-slate-300'>Cafe Canvas</p>
-        </div>
-        <div className='z-1'>
-          <SpatialCanvas />
         </div>
       </div>
     </div>

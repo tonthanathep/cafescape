@@ -5,9 +5,10 @@ import getHowlInstance from "../../../utils/getHowlInstance";
 interface Props {
   id: number;
   name: string;
+  type: string;
 }
 
-const AmbiSoundNode = ({ id, name }: Props) => {
+const AmbiSoundNode = ({ id, name, type }: Props) => {
   const { currentCanvas, deleteLayer, setVolume } = usePlayerStore();
 
   const howlInstance = getHowlInstance("ambi", id);
@@ -32,25 +33,37 @@ const AmbiSoundNode = ({ id, name }: Props) => {
 
   // Render Sound Node Card
   return (
-    <div className='flex flex-col h-28 p-2 rounded-xl shadow-x justify-between bg-white transition-all hover:-translate-y-2 hover:drop-shadow-lg duration-200'>
-      <h1 className='text-sm font-medium'> {name} </h1>
+    <div className='flex flex-col h-32 p-3 pt-2 pb-2 rounded-xl shadow-x justify-between bg-white transition-all hover:-translate-y-2 hover:drop-shadow-lg duration-200'>
+      <div className='w-full justify-between flex flex-row items-center'>
+        <p className='text-xs font-light text-black/70'>no.{id}</p>
+        <button
+          className='btn btn-xs btn-circle btn-ghost'
+          onClick={handleRemove}
+        >
+          ✕
+        </button>
+      </div>
+      <div className='flex flex-col'>
+        <h1 className='text-lg font-semibold leading-6 '> {name} </h1>
+        <p className='text-xs font-light text-black/40'> {type} </p>
+      </div>
       <div className=''>
         <input
           type='range'
           min={0}
           max='100'
-          className='range range-xs range-success'
+          className='range range-xs range-success '
           onChange={handleVolumeChange}
         />
       </div>
-      <div className='flex flex-row'>
+      {/* <div className='flex flex-row'>
         <button className='btn btn-success btn-sm' onClick={handleSoundPlay}>
           Play
         </button>
         <button className='btn btn-success btn-sm' onClick={handleRemove}>
           Remove
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

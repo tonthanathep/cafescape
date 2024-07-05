@@ -40,13 +40,23 @@ const CafeSoundNode = ({ id, name }: Props) => {
   // Render Sound Node Card
   return (
     <motion.div
-      className='flex flex-col h-28 p-2 rounded-xl shadow-x justify-between bg-white transition-all hover:-translate-y-2 hover:drop-shadow-lg duration-200'
+      className='flex flex-col aspect-square p-3 rounded-xl shadow-x justify-between bg-white transition-all hover:drop-shadow-lg duration-200'
       initial='hidden'
       animate='visible'
       variants={fadeInVariants}
       transition={{ duration: 0 }}
     >
-      <h1 className='text-sm font-medium'> {name} </h1>
+      <div className='w-full justify-between flex flex-row items-center'>
+        <p className='text-xs font-light text-black/70'>no.{id}</p>
+        <button
+          className='btn btn-xs btn-circle btn-ghost'
+          onClick={handleRemove}
+        >
+          ✕
+        </button>
+      </div>
+      <h1 className='text-lg font-semibold leading-6 '> {name} </h1>
+
       <div className=''>
         <input
           type='range'
@@ -56,14 +66,14 @@ const CafeSoundNode = ({ id, name }: Props) => {
           onChange={handleVolumeChange}
         />
       </div>
-      <div className='flex flex-row'>
+      {/* <div className='flex flex-row'>
         <button className='btn btn-success btn-sm' onClick={handleSoundPlay}>
           Play
         </button>
         <button className='btn btn-success btn-sm' onClick={handleRemove}>
           Remove
         </button>
-      </div>
+      </div> */}
     </motion.div>
   );
 };
