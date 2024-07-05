@@ -1,6 +1,7 @@
 import usePlayerStore from "@/app/data/store/PlayerStore";
 import { motion } from "framer-motion";
 import { Howler } from "howler"; // Ensure Howler is imported
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import useMeasure from "react-use-measure";
@@ -16,6 +17,7 @@ const SpatialCanvas = () => {
     x: currentCanvas.canvasListener.x,
     y: currentCanvas.canvasListener.z,
   });
+  const backgroundImageUrl = "/images/cafe.png";
 
   useEffect(() => {
     setCanvas(
@@ -55,10 +57,17 @@ const SpatialCanvas = () => {
 
   return (
     <div>
-      <div
-        ref={refCanvas}
-        className='relative w-full aspect-video rounded-2xl bg-[url("/images/cafe.jpg")] bg-cover'
-      >
+      <div ref={refCanvas} className='relative w-full h-[35rem] rounded-2xl'>
+        <div className='fixed'>
+          <Image
+            src={backgroundImageUrl}
+            alt='Cover Image'
+            objectFit='cover'
+            className='-z-10'
+            width={boundsCanvas.width}
+            height={boundsCanvas.height}
+          />
+        </div>
         <Draggable
           bounds='parent'
           onDrag={handleDrag}
@@ -76,6 +85,7 @@ const SpatialCanvas = () => {
             animate='visible'
             variants={fadeInVariants}
             transition={{ duration: 0.4, ease: "easeInOut" }}
+            key={layer.name}
           >
             <Draggable
               bounds='parent'
@@ -92,36 +102,36 @@ const SpatialCanvas = () => {
         ))}
       </div>
 
-      <div className='pt-5 pl-3 w-fit opacity-50 select-none'>
-        <p className='text-[0.8rem] font-light opacity-55'>Debugging Windows</p>
-        <p>
-          Current Position: x: {currentCanvas.canvasListener.x}, z:{" "}
-          {currentCanvas.canvasListener.z}
-        </p>
-        <p>
-          Relative Position: x:{" "}
-          {currentCanvas.canvasListener.x + boundsListener.width / 2}, z:{" "}
-          {currentCanvas.canvasListener.z + boundsListener.height / 2}
-        </p>
-        <p>
-          Relative to True Scale Percentage x:
-          {Math.round(
-            ((currentCanvas.canvasListener.x + boundsListener.width / 2) /
-              boundsCanvas.width) *
-              100
-          )}
-          %, y:
-          {Math.round(
-            ((currentCanvas.canvasListener.z + boundsListener.height / 2) /
-              boundsCanvas.height) *
-              100
-          )}
-          %
-        </p>
-        <p>
-          Size W: {boundsCanvas.width}, H: {boundsCanvas.height}
-        </p>
-      </div>
+      {/* <div className='pt-5 pl-3 w-fit opacity-50 select-none'>
+    <p className='text-[0.8rem] font-light opacity-55'>Debugging Windows</p>
+    <p>
+      Current Position: x: {currentCanvas.canvasListener.x}, z:{" "}
+      {currentCanvas.canvasListener.z}
+    </p>
+    <p>
+      Relative Position: x:{" "}
+      {currentCanvas.canvasListener.x + boundsListener.width / 2}, z:{" "}
+      {currentCanvas.canvasListener.z + boundsListener.height / 2}
+    </p>
+    <p>
+      Relative to True Scale Percentage x:
+      {Math.round(
+        ((currentCanvas.canvasListener.x + boundsListener.width / 2) /
+          boundsCanvas.width) *
+          100
+      )}
+      %, y:
+      {Math.round(
+        ((currentCanvas.canvasListener.z + boundsListener.height / 2) /
+          boundsCanvas.height) *
+          100
+      )}
+      %
+    </p>
+    <p>
+      Size W: {boundsCanvas.width}, H: {boundsCanvas.height}
+    </p>
+  </div> */}
     </div>
   );
 };

@@ -96,22 +96,26 @@ const BlendInfo = () => {
   }, [totalSeconds]);
 
   return (
-    <div className='card p-5 bg-white/0 flex flex-row gap-1'>
-      <div className='basis-5/6'>
-        <p className='text-white font-light text-sm opacity-60'>
-          I'm now working in
-        </p>
-        <p className='text-white font-bold text-2xl'>{currentBlend.name}</p>
+    <div className='flex flex-col justify-center h-full gap-1'>
+      <div className='flex flex-row items-center justify-start gap-3'>
+        <div className='flex flex-col '>
+          <p className='font-light text-[3rem]'>☕️</p>
+        </div>
+        <div className='flex flex-col'>
+          <p className='text-black/60 font-light text-xs'>I'm now working in</p>
+          <p className='text-black/80 font-extrabold text-xl'>
+            {currentBlend.name}
+          </p>
+        </div>
       </div>
-      <div className='basis-1/6'>
-        <p className='text-white font-light text-sm opacity-60'>
-          Current Session
-        </p>
-        <p className='text-white font-bold text-2xl'>
+      <div className='flex flex-col items-center justify-center border-t-[1px] border-b-[1px] border-black/10 pb-2 -space-y-1'>
+        <p className='text-black/80 font-black text-[2.5rem]'>
           {minutes < 10 ? `0${minutes}:` : `${minutes}:`}
           {seconds < 10 ? `0${seconds}` : `${seconds}`}
         </p>
+        <p className='text-black/70 font-light text-xs'>Current Session</p>
       </div>
+
       <div>
         <dialog id='confirm_save' className='modal'>
           <div className='modal-box'>
@@ -193,7 +197,7 @@ const BlendInfo = () => {
       </dialog>
 
       <div
-        className='btn btn-primary'
+        className='btn btn-outline btn-sm rounded-xl'
         onClick={() =>
           (
             document.getElementById("confirm_save") as HTMLDialogElement
@@ -203,7 +207,7 @@ const BlendInfo = () => {
         Save
       </div>
       <div
-        className='btn btn-primary'
+        className='btn btn-outline btn-sm rounded-xl'
         onClick={() =>
           (document.getElementById("share") as HTMLDialogElement).showModal()
         }
@@ -211,7 +215,7 @@ const BlendInfo = () => {
         Share
       </div>
       <div
-        className='btn btn-primary'
+        className='btn btn-outline btn-sm rounded-xl'
         onClick={() =>
           (
             document.getElementById("confirm_exit") as HTMLDialogElement

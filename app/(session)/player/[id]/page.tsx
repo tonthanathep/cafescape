@@ -1,16 +1,15 @@
 "use client";
 import CafeSoundPanel from "@/app/components/BlendPlayer/CafeSound/CafeSoundPanel";
+import SpatialCanvas from "@/app/components/BlendPlayer/CafeSound/SpatialCanvas";
 import usePlayerStore from "@/app/data/store/PlayerStore";
 import useSessionStore from "@/app/data/store/SessionStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
 import axios from "axios";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import AmbiSoundPanel from "../../../components/BlendPlayer/AmbiSound/AmbiSoundPanel";
-import BlendDataDebugger from "../../../components/BlendPlayer/BlendDataDebugger";
 import BlendInfo from "../../../components/BlendPlayer/BlendInfo";
 
 const BlendPlayerPage = () => {
@@ -54,45 +53,45 @@ const BlendPlayerPage = () => {
     fetchBlend();
   }, [setRefresh]);
 
-  useEffect(() => {
-    const createSession = async () => {
-      if (update) {
-        console.log("create session called");
-        try {
-          axios.post("/api/session", currentSession).then((res) => {
-            setSession(res.data[0]);
-          });
-        } catch (error) {
-          console.error("Error creating session:", error);
-        }
-      } else {
-        console.log("not yet!");
-      }
-    };
+  // useEffect(() => {
+  //   const createSession = async () => {
+  //     if (update) {
+  //       console.log("create session called");
+  //       try {
+  //         axios.post("/api/session", currentSession).then((res) => {
+  //           setSession(res.data[0]);
+  //         });
+  //       } catch (error) {
+  //         console.error("Error creating session:", error);
+  //       }
+  //     } else {
+  //       console.log("not yet!");
+  //     }
+  //   };
 
-    const checkOngoing = async () => {
-      await axios
-        .get("/api/session/ongoing")
-        .then((res) => {
-          if (res.data.isOngoing) {
-            setTempSessionId(res.data.session_uuid);
-            (
-              document.getElementById("ongoing-exist") as HTMLDialogElement
-            ).showModal();
-            console.log("ongoing session found");
-          } else {
-            console.log("no ongoing session found");
-            createSession();
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching session data:", error);
-        });
-    };
-    if (update) {
-      checkOngoing();
-    }
-  }, [update]);
+  //   const checkOngoing = async () => {
+  //     await axios
+  //       .get("/api/session/ongoing")
+  //       .then((res) => {
+  //         if (res.data.isOngoing) {
+  //           setTempSessionId(res.data.session_uuid);
+  //           (
+  //             document.getElementById("ongoing-exist") as HTMLDialogElement
+  //           ).showModal();
+  //           console.log("ongoing session found");
+  //         } else {
+  //           console.log("no ongoing session found");
+  //           createSession();
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching session data:", error);
+  //       });
+  //   };
+  //   if (update) {
+  //     checkOngoing();
+  //   }
+  // }, [update]);
 
   const handleAbandon = () => {
     // send axios put to delete session
@@ -113,43 +112,40 @@ const BlendPlayerPage = () => {
   };
 
   return (
-    <div className='relative min-h-screen flex items-center justify-center'>
-      <div className='fixed top-0 left-0 w-full h-full blur-sm scale-105'>
-        <Image
-          src={backgroundImageUrl}
-          alt='Cover Image'
-          layout='fill'
-          objectFit='cover'
-          className='-z-10'
-        />
-      </div>
-      <div className='relative flex flex-row gap-6 mt-[8rem] w-full max-w-[65rem]'>
-        {/* <TestSoundNode /> */}
-        <div className='flex flex-col basis-4/5 '>
-          <motion.div
-            className='basis-1/5'
-            initial='hidden'
-            animate='visible'
-            variants={fadeInVariants}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            <BlendInfo />
-          </motion.div>
-          <motion.div
-            className='basis-4/5'
-            initial='hidden'
-            animate='visible'
-            variants={fadeInVariants}
-            transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          >
-            <CafeSoundPanel />
-          </motion.div>
+    <div className='min-h-screen w-full flex items-center bg-[#e9e7e2] overflow-auto'>
+      <div className='flex flex-col w-full gap-3 justify-center items-center'>
+        <div className='basis basis-3/4 flex flex-row w-full justify-around'>
+          <div className='basis basis-1/6 mt-[5.5rem]'>
+            <motion.div
+              className='h-full'
+              initial='hidden'
+              animate='visible'
+              variants={fadeInVariants}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
+              <BlendInfo />
+            </motion.div>
+          </div>
+          <div className='basis basis-3/6 mt-[4.5rem]'>
+            <motion.div
+              className=''
+              initial='hidden'
+              animate='visible'
+              variants={fadeInVariants}
+              transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+            >
+              <SpatialCanvas />
+            </motion.div>
+          </div>
+          <div className='basis basis-1/6 flex items-center mt-[5.5rem]'>
+            <AmbiSoundPanel />
+          </div>
         </div>
-        <div className='basis-1/5'>
-          <AmbiSoundPanel />
-          <BlendDataDebugger />
+        <div className='basis basis-1/4 flex -mt-[5rem] justify-center items-center'>
+          <CafeSoundPanel />
         </div>
       </div>
+
       <dialog id='ongoing-exist' className='modal'>
         <div className='modal-box'>
           <h3 className='font-bold text-lg'>Ongoing session exist</h3>
