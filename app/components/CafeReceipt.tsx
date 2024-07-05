@@ -6,8 +6,8 @@ const inconsolata = Inconsolata({
 });
 
 interface Props {
-  blendData: {};
-  sessionData: {};
+  blendData: any;
+  sessionData: any;
 }
 
 const CafeReceipt = ({ blendData, sessionData }: Props) => {
@@ -74,7 +74,7 @@ const CafeReceipt = ({ blendData, sessionData }: Props) => {
             <p className='text-sm font-light opacity-40'>Cafe elements:</p>
           </div>
         )}
-        {blendData.cafeLayers.map((layer, index) => (
+        {blendData.cafeLayers.map((layer: any, index: any) => (
           <p className='text-sm' key={index}>
             {layer.name}
           </p>
@@ -84,7 +84,7 @@ const CafeReceipt = ({ blendData, sessionData }: Props) => {
             <p className='text-sm font-light opacity-40'>Ambience elements:</p>
           </div>
         )}
-        {blendData.ambiLayers.map((layer, index) => (
+        {blendData.ambiLayers.map((layer: any, index: any) => (
           <p className='text-sm' key={index}>
             {layer.name}
           </p>

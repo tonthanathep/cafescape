@@ -36,7 +36,6 @@ const Page = () => {
       await axios
         .put("/api/session/", {
           ...sessionData,
-          id: sessionData.id,
           status: "rated",
           score: selectedOption,
         })

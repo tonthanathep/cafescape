@@ -3,9 +3,9 @@ import { create } from "zustand";
 
 export interface userType {
   id: string;
-  provider: {};
+  provider: any;
   email: string;
-  user_profile: {};
+  user_profile: any;
 }
 
 export interface userStore {
@@ -23,7 +23,7 @@ const useUserStore = create<userStore>((set) => ({
     email: "",
     user_profile: {},
   },
-  setCurrentUser: (userData) =>
+  setCurrentUser: (userData: any) =>
     set((state) => {
       console.log("userData: ", userData);
       return {

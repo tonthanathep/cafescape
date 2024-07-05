@@ -4,18 +4,18 @@ const Page = async () => {
   const supabase = createClient();
   let userId;
   let userData;
-  let userBlends;
-  let userSessions;
+  let userBlends: any;
+  let userSessions: any;
 
   await supabase.auth.getUser().then((data) => {
-    userId = data.data.user.id;
+    userId = data.data.user?.id;
   });
 
   await supabase
     .from("profiles")
     .select("*")
     .eq("id", userId)
-    .then((data) => {
+    .then((data: any) => {
       userData = data.data;
     });
 
@@ -23,7 +23,7 @@ const Page = async () => {
     .from("blends")
     .select("*")
     .eq("owner", userId)
-    .then((data: {}) => {
+    .then((data: any) => {
       userBlends = data.data;
     });
 
@@ -31,18 +31,18 @@ const Page = async () => {
     .from("sessions")
     .select("*")
     .eq("owner_uuid", userId)
-    .then((data: {}) => {
+    .then((data: any) => {
       userSessions = data.data;
     });
 
-  const convertSecondsToHoursMinutes = (seconds) => {
+  const convertSecondsToHoursMinutes = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     return { hours, minutes };
   };
 
   const totalDurationInSeconds = userSessions.reduce(
-    (total, session) => total + session.duration,
+    (total: any, session: { duration: any }) => total + session.duration,
     0
   );
 
@@ -55,7 +55,7 @@ const Page = async () => {
       <div className='flex flex-col'>
         <div>
           You've been working for {hours} hours and {minutes} minutes
-          {userBlends.map((blend) => (
+          {userBlends.map((blend: any) => (
             <div className='flex flex-col card bg-white shadow-sm'>
               <h1>{blend.name}</h1>
               <p>{blend.owner}</p>

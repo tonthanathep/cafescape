@@ -13,8 +13,8 @@ const GreetingHero = async () => {
     await supabase
       .from("profiles")
       .select("nick_name")
-      .eq("id", data.data.user.id)
-      .then((data) => {
+      .eq("id", data.data.user?.id)
+      .then((data: any) => {
         user.name = data.data[0].nick_name;
       });
   });
