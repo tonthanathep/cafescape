@@ -54,9 +54,9 @@ const Navbar = () => {
   const today = new Date();
   return (
     <div className='fixed z-50 w-full'>
-      <div className='flex navbar justify-between h-[3.3rem] pt-4 items-center mx-auto w-full pl-8 pr-4'>
+      <div className='flex navbar justify-between h-[3.3rem] pt-8 items-center mx-auto w-full pl-8 pr-4'>
         <div className='navbar-start'>
-          <SiteLogo variant='light' />
+          <SiteLogo variant='dark' />
         </div>
         <div className='navbar-end flex flex-row gap-3'>
           <div className='flex flex-row  gap-3 pt-4 pb-4 pr-6 pl-6 drop-shadow-2xl bg-white rounded-2xl'>

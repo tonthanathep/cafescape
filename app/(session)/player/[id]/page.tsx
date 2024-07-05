@@ -53,45 +53,45 @@ const BlendPlayerPage = () => {
     fetchBlend();
   }, [setRefresh]);
 
-  // useEffect(() => {
-  //   const createSession = async () => {
-  //     if (update) {
-  //       console.log("create session called");
-  //       try {
-  //         axios.post("/api/session", currentSession).then((res) => {
-  //           setSession(res.data[0]);
-  //         });
-  //       } catch (error) {
-  //         console.error("Error creating session:", error);
-  //       }
-  //     } else {
-  //       console.log("not yet!");
-  //     }
-  //   };
+  useEffect(() => {
+    const createSession = async () => {
+      if (update) {
+        console.log("create session called");
+        try {
+          axios.post("/api/session", currentSession).then((res) => {
+            setSession(res.data[0]);
+          });
+        } catch (error) {
+          console.error("Error creating session:", error);
+        }
+      } else {
+        console.log("not yet!");
+      }
+    };
 
-  //   const checkOngoing = async () => {
-  //     await axios
-  //       .get("/api/session/ongoing")
-  //       .then((res) => {
-  //         if (res.data.isOngoing) {
-  //           setTempSessionId(res.data.session_uuid);
-  //           (
-  //             document.getElementById("ongoing-exist") as HTMLDialogElement
-  //           ).showModal();
-  //           console.log("ongoing session found");
-  //         } else {
-  //           console.log("no ongoing session found");
-  //           createSession();
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching session data:", error);
-  //       });
-  //   };
-  //   if (update) {
-  //     checkOngoing();
-  //   }
-  // }, [update]);
+    const checkOngoing = async () => {
+      await axios
+        .get("/api/session/ongoing")
+        .then((res) => {
+          if (res.data.isOngoing) {
+            setTempSessionId(res.data.session_uuid);
+            (
+              document.getElementById("ongoing-exist") as HTMLDialogElement
+            ).showModal();
+            console.log("ongoing session found");
+          } else {
+            console.log("no ongoing session found");
+            createSession();
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching session data:", error);
+        });
+    };
+    if (update) {
+      checkOngoing();
+    }
+  }, [update]);
 
   const handleAbandon = () => {
     // send axios put to delete session
@@ -112,7 +112,7 @@ const BlendPlayerPage = () => {
   };
 
   return (
-    <div className='min-h-screen w-full flex items-center bg-[#e9e7e2] overflow-auto'>
+    <div className='min-h-screen w-full flex items-center bg-[#ebe3db] overflow-auto'>
       <div className='flex flex-col w-full gap-3 justify-center items-center'>
         <div className='basis basis-3/4 flex flex-row w-full justify-around'>
           <div className='basis basis-1/6 mt-[5.5rem]'>
