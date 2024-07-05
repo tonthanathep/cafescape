@@ -7,8 +7,8 @@ const AmbiSoundPanel = () => {
 
   return (
     <div className='w-full'>
-      <div className='flex flex-row items-center gap-5 justify-between pb-1'>
-        <h1 className='text-xl font-bold'>Ambience</h1>
+      <div className='flex flex-row items-center gap-5 justify-between pl-1 pr-1 pb-1'>
+        <h1 className='text-xl font-bold '>Ambience</h1>
         <AddSound layerType='ambi' />
       </div>
 

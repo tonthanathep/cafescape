@@ -113,8 +113,8 @@ const BlendPlayerPage = () => {
 
   return (
     <div className='min-h-screen w-full flex items-center bg-[#ebe3db] overflow-auto'>
-      <div className='flex flex-col w-full gap-3 justify-center items-center'>
-        <div className='basis basis-3/4 flex flex-row w-full justify-around'>
+      <div className='flex flex-col w-full justify-center -space-y-24 items-center'>
+        <div className='basis basis-3/4 flex flex-row w-full justify-evenly'>
           <div className='basis basis-1/6 mt-[5.5rem]'>
             <motion.div
               className='h-full'
@@ -141,7 +141,7 @@ const BlendPlayerPage = () => {
             <AmbiSoundPanel />
           </div>
         </div>
-        <div className='basis basis-1/4 flex -mt-[5rem] justify-center items-center'>
+        <div className='basis basis-1/4 flex justify-center items-center'>
           <CafeSoundPanel />
         </div>
       </div>
