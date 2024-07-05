@@ -6,16 +6,15 @@ const AmbiSoundPanel = () => {
   const { currentBlend } = usePlayerStore();
 
   return (
-    <div className='card w-full bg-white p-4 shadow-sm'>
-      <div className='flex flex-row items-center justify-between'>
-        <h1 className='text-s font-light'>Ambience</h1>
-
+    <div className='w-full'>
+      <div className='flex flex-row items-center gap-5 justify-between pb-1'>
+        <h1 className='text-xl font-bold'>Ambience</h1>
         <AddSound layerType='ambi' />
       </div>
 
-      <div className='flex flex-col bg-slate-300/20 rounded-2xl pt-3 pl-2 pr-2 pb-3 gap-3 w-full'>
+      <div className='flex flex-col gap-3 w-full mt-1'>
         {currentBlend.ambiLayers.map((list) => (
-          <AmbiSoundNode id={list.id} name={list.name} />
+          <AmbiSoundNode id={list.id} name={list.name} type={list.soundType} />
         ))}
       </div>
     </div>

@@ -197,7 +197,7 @@ const BlendInfo = () => {
       </dialog>
 
       <div
-        className='btn btn-outline btn-sm rounded-xl'
+        className='btn btn-outline btn-md rounded-xl'
         onClick={() =>
           (
             document.getElementById("confirm_save") as HTMLDialogElement
@@ -207,7 +207,7 @@ const BlendInfo = () => {
         Save
       </div>
       <div
-        className='btn btn-outline btn-sm rounded-xl'
+        className='btn btn-outline btn-md rounded-xl'
         onClick={() =>
           (document.getElementById("share") as HTMLDialogElement).showModal()
         }
@@ -215,7 +215,7 @@ const BlendInfo = () => {
         Share
       </div>
       <div
-        className='btn btn-outline btn-sm rounded-xl'
+        className='btn btn-outline btn-md rounded-xl'
         onClick={() =>
           (
             document.getElementById("confirm_exit") as HTMLDialogElement
