@@ -38,6 +38,17 @@ const CafeReceipt = ({ blendData, sessionData }: Props) => {
     },
   };
 
+  // create const for processing duration in sessionData into hours and minutes and seconds
+  const duration = sessionData.duration;
+  const convertSecondsToHMS = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return { hours, minutes, seconds: remainingSeconds };
+  };
+
+  const { hours, minutes, seconds } = convertSecondsToHMS(duration);
+
   return (
     <div
       style={jaggedStyles.receiptContainer}
@@ -81,7 +92,11 @@ const CafeReceipt = ({ blendData, sessionData }: Props) => {
       </div>
       <div className='flex flex-row justify-between'>
         <p className='text-sm font-light text-black/50'>Session Time</p>
-        <p className='text-sm font-bold text-black/50'>12 mins</p>
+        <p className='text-sm font-bold text-black/50'>
+          {hours > 0 && ` ${hours}h`}
+          {minutes > 0 && ` ${minutes}m`}
+          {seconds > 0 && ` ${seconds}s`}
+        </p>
       </div>
       <div
         style={{ ...jaggedStyles.jagged, ...jaggedStyles.jaggedBottom }}

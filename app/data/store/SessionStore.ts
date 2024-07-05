@@ -19,6 +19,7 @@ export interface SessionStore {
   setSessionDuration: (duration: number) => void;
   setSessionStatus: (status: "ended" | "rated") => void;
   rateSession: (score: number) => void;
+  clearSession: () => void;
 }
 
 const useSessionStore = create<SessionStore>((set) => ({
@@ -69,6 +70,18 @@ const useSessionStore = create<SessionStore>((set) => ({
         ...state.currentSession,
         score: score,
         status: "rated",
+      },
+    })),
+  clearSession: () =>
+    set(() => ({
+      currentSession: {
+        id: "",
+        owner_uuid: "",
+        blends_uuid: "",
+        created_at: "",
+        duration: 0,
+        status: "ongoing",
+        score: 0,
       },
     })),
 }));

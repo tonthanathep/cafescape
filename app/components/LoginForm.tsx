@@ -2,6 +2,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dispatch } from "react";
 import { login } from "../(auth)/login/action";
+import SiteLogo from "./SiteLogo";
 
 interface Props {
   setState: Dispatch<boolean>;
@@ -10,11 +11,11 @@ interface Props {
 const LoginForm = ({ setState }: Props) => {
   return (
     <div className='flex flex-col justify-between h-full'>
-      <div>cafescape</div>
+      <SiteLogo variant='dark' />
       <div>
         <div className='mb-5 justify-center flex flex-col'>
-          <h1 className='text-md font-semibold'>☕️ Welcome back</h1>
-          <h1 className='text-xs font-light'>
+          <h1 className='text-xl font-semibold'>☕️ Welcome back</h1>
+          <h1 className='text-sm font-light'>
             are you ready to be productive?
           </h1>
         </div>

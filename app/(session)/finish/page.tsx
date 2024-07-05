@@ -1,5 +1,6 @@
 "use client";
 import CafeReceipt from "@/app/components/CafeReceipt";
+import useSessionStore from "@/app/data/store/SessionStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
 import axios from "axios";
 import Image from "next/image";
@@ -24,6 +25,7 @@ const Page = () => {
   });
   const [isLoaded, setIsLoaded] = useState(false);
   const [ratingDesc, setRatingDesc] = useState("");
+  const { clearSession } = useSessionStore();
 
   const handleSelect = (value: number) => {
     setSelectedOption(value);
@@ -41,6 +43,7 @@ const Page = () => {
         .then((res) => {
           if (res.status === 200) {
             console.log(res.data);
+            clearSession();
             router.push("/");
           } else {
             console.log(res);

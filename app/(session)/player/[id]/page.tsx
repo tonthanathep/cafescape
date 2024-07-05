@@ -123,7 +123,7 @@ const BlendPlayerPage = () => {
           className='-z-10'
         />
       </div>
-      <div className='relative flex flex-row gap-6 mt-[5rem] w-full max-w-[65rem]'>
+      <div className='relative flex flex-row gap-6 mt-[8rem] w-full max-w-[65rem]'>
         {/* <TestSoundNode /> */}
         <div className='flex flex-col basis-4/5 '>
           <motion.div

@@ -1,4 +1,3 @@
-import BlendCard from "@/app/components/BlendCard/BlendCard";
 import { createClient } from "@/app/utils/supabase/server";
 
 const Page = async () => {
@@ -54,26 +53,14 @@ const Page = async () => {
   return (
     <div className='flex items-center justify-center min-h-screen bg-amber-50'>
       <div className='flex flex-col'>
-        <span className='w-full inline-grid grid-cols-6 gap-4'>
-          {userBlends.map((list: any) => {
-            const isCafe = list.cafeLayers.length > 0;
-            const isNoise = list.ambiLayers.some(
-              (sound: any) => sound.soundType === "static"
-            );
-            const isNature = list.ambiLayers.some(
-              (sound: any) => sound.soundType === "nature"
-            );
-            return (
-              <BlendCard
-                name={list.name}
-                id={list.id}
-                layerType={{ isCafe, isNoise, isNature }}
-              />
-            );
-          })}
-        </span>
         <div>
           You've been working for {hours} hours and {minutes} minutes
+          {userBlends.map((blend) => (
+            <div className='flex flex-col card bg-white shadow-sm'>
+              <h1>{blend.name}</h1>
+              <p>{blend.owner}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
