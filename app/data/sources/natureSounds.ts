@@ -1,4 +1,8 @@
-export const natureSounds = [
+import { SoundSourcesType } from "./soundSources";
+
+type SoundLibrary = Omit<SoundSourcesType, "id">;
+
+export const natureSounds: Array<SoundLibrary> = [
   {
     name: "Bird Chirping",
     desc: "Sounds of birds chirping in the morning",
@@ -59,5 +63,4 @@ export const natureSounds = [
     orientation: [0, -1, 0],
     pannerAttr: {},
   },
-  // Add more nature sounds here...
 ];

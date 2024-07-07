@@ -1,39 +1,42 @@
-export const staticSounds = [
+import { SoundSourcesType } from "./soundSources";
+
+type SoundLibrary = Omit<SoundSourcesType, "id">;
+
+export const staticSounds: Array<SoundLibrary> = [
   {
-    name: "White Noise",
-    desc: "Sounds of people chatting and discussing their daily lives",
-    path: "/sounds/rain.mp3",
-    isOutside: true,
+    name: "Brown Noise",
+    desc: "Soothing static brown noise",
+    path: "https://nmbeyfxpmhmxwjbzmcod.supabase.co/storage/v1/object/public/sounds/static/static_brownnoise.mp3",
+    isOutside: false,
     renderType: "static",
     soundType: "static",
-    vol: 1.0,
-    pos: { x: 0, y: 30, z: 0 },
-    orientation: [0, -1, 0],
-    pannerAttr: {},
+    vol: 0.5,
+  },
+  {
+    name: "Fan Noise",
+    desc: "Calming static fan noise",
+    path: "https://nmbeyfxpmhmxwjbzmcod.supabase.co/storage/v1/object/public/sounds/static/static_fannoise.mp3",
+    isOutside: false,
+    renderType: "static",
+    soundType: "static",
+    vol: 0.5,
+  },
+  {
+    name: "Grey Noise",
+    desc: "Relaxing static grey noise",
+    path: "https://nmbeyfxpmhmxwjbzmcod.supabase.co/storage/v1/object/public/sounds/static/static_greynoise.mp3",
+    isOutside: false,
+    renderType: "static",
+    soundType: "static",
+    vol: 0.5,
   },
   {
     name: "Pink Noise",
-    desc: "Sounds of people chatting and discussing their daily lives",
-    path: "/sounds/rain.mp3",
-    isOutside: true,
+    desc: "Gentle static pink noise",
+    path: "https://nmbeyfxpmhmxwjbzmcod.supabase.co/storage/v1/object/public/sounds/static/static_pinknoise.mp3",
+    isOutside: false,
     renderType: "static",
     soundType: "static",
-    vol: 1.0,
-    pos: { x: 0, y: 30, z: 0 },
-    orientation: [0, -1, 0],
-    pannerAttr: {},
+    vol: 0.5,
   },
-  {
-    name: "Brown Noise",
-    desc: "Sounds of people chatting and discussing their daily lives",
-    path: "/sounds/rain.mp3",
-    isOutside: true,
-    renderType: "static",
-    soundType: "static",
-    vol: 1.0,
-    pos: { x: 0, y: 30, z: 0 },
-    orientation: [0, -1, 0],
-    pannerAttr: {},
-  },
-  // Add more static sounds here...
 ];

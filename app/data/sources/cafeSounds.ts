@@ -1,8 +1,12 @@
-export const cafeSounds = [
+import { SoundSourcesType } from "./soundSources";
+
+type SoundLibrary = Omit<SoundSourcesType, "id">;
+
+export const cafeSounds: Array<SoundLibrary> = [
   {
     name: "Coffee Machine",
-    desc: "Sound of Coffee Machine in operation",
-    path: "/sounds/machine1.mp3",
+    desc: "The familiar sound of a coffee machine brewing",
+    path: "https://nmbeyfxpmhmxwjbzmcod.supabase.co/storage/v1/object/public/sounds/cafe/cafe_coffeemaking.mp3",
     isOutside: false,
     renderType: "cafe",
     soundType: "cafe",
@@ -12,50 +16,14 @@ export const cafeSounds = [
     pannerAttr: {},
   },
   {
-    name: "Door Opening",
-    desc: "Sound of Coffee Machine in operation",
-    path: "/sounds/machine1.mp3",
-    isOutside: false,
-    renderType: "cafe",
-    soundType: "cafe",
-    vol: 1.0,
-    pos: { x: 68, y: 0, z: 20 },
-    orientation: [0, 0, 0],
-    pannerAttr: {},
-  },
-  {
-    name: "Pencil Writing",
-    desc: "Sound of Coffee Machine in operation",
-    path: "/sounds/machine1.mp3",
-    isOutside: false,
-    renderType: "cafe",
-    soundType: "cafe",
-    vol: 1.0,
-    pos: { x: 10, y: 0, z: 20 },
-    orientation: [0, 0, 0],
-    pannerAttr: {},
-  },
-  {
     name: "Keyboard Typing",
-    desc: "Sound of Coffee Machine in operation",
-    path: "/sounds/machine1.mp3",
+    desc: "The rhythmic tapping of keyboard keys",
+    path: "https://nmbeyfxpmhmxwjbzmcod.supabase.co/storage/v1/object/public/sounds/cafe/cafe_keyboard.mp3",
     isOutside: false,
     renderType: "cafe",
     soundType: "cafe",
     vol: 1.0,
     pos: { x: 10, y: 0, z: 20 },
-    orientation: [0, 0, 0],
-    pannerAttr: {},
-  },
-  {
-    name: "Cup Clinking",
-    desc: "Sound of Coffee Machine in operation",
-    path: "/sounds/machine1.mp3",
-    isOutside: false,
-    renderType: "cafe",
-    soundType: "cafe",
-    vol: 1.0,
-    pos: { x: 45, y: 0, z: 45 },
     orientation: [0, 0, 0],
     pannerAttr: {},
   },

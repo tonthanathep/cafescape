@@ -95,22 +95,28 @@ const usePlayerStore = create<PlayerStore>((set) => ({
       // Translate Save Data to Canvas Data & Create New Cafe Howl
       const newCafeData = blend.cafeLayers.map((layer) => {
         const newHowl = createHowlInstance(layer, state);
-        const canvasX = Math.round(
-          (layer.pos.x! / 100) * state.currentCanvas.canvasWidth -
-            state.currentCanvas.listenerWidth / 2
-        );
+        const canvasX =
+          layer.pos !== undefined
+            ? Math.round(
+                (layer.pos.x! / 100) * state.currentCanvas.canvasWidth -
+                  state.currentCanvas.listenerWidth / 2
+              )
+            : 0;
 
-        const canvasZ = Math.round(
-          (layer.pos.z! / 100) * state.currentCanvas.canvasHeight -
-            state.currentCanvas.listenerHeight / 2
-        );
+        const canvasZ =
+          layer.pos !== undefined
+            ? Math.round(
+                (layer.pos.z! / 100) * state.currentCanvas.canvasHeight -
+                  state.currentCanvas.listenerHeight / 2
+              )
+            : 0;
 
         return {
           canvasLayer: {
             name: layer.name,
             id: layer.id,
             x: canvasX,
-            y: layer.pos.y,
+            y: layer.pos!.y,
             z: canvasZ,
           },
           howl: {
@@ -162,15 +168,21 @@ const usePlayerStore = create<PlayerStore>((set) => ({
       // Add New Sound Instance
       const newHowl = createHowlInstance(layer, state);
 
-      const canvasX = Math.round(
-        (layer.pos.x! / 100) * state.currentCanvas.canvasWidth -
-          state.currentCanvas.listenerWidth / 2
-      );
+      const canvasX =
+        layer.pos !== undefined
+          ? Math.round(
+              (layer.pos.x! / 100) * state.currentCanvas.canvasWidth -
+                state.currentCanvas.listenerWidth / 2
+            )
+          : 0;
 
-      const canvasZ = Math.round(
-        (layer.pos.z! / 100) * state.currentCanvas.canvasHeight -
-          state.currentCanvas.listenerHeight / 2
-      );
+      const canvasZ =
+        layer.pos !== undefined
+          ? Math.round(
+              (layer.pos.z! / 100) * state.currentCanvas.canvasHeight -
+                state.currentCanvas.listenerHeight / 2
+            )
+          : 0;
 
       return {
         currentBlend: {
@@ -194,7 +206,7 @@ const usePlayerStore = create<PlayerStore>((set) => ({
                     name: layer.name,
                     id: layer.id,
                     x: canvasX,
-                    y: layer.pos.y,
+                    y: layer.pos!.y,
                     z: canvasZ,
                   },
                 ]
