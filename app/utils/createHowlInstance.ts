@@ -14,12 +14,12 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
 
   const percentToPixel = () => {
     const canvasX = Math.round(
-      (layer.pos.x! / 100) * state.currentCanvas.canvasWidth -
+      (layer.pos!.x / 100) * state.currentCanvas.canvasWidth -
         state.currentCanvas.listenerWidth / 2
     );
 
     const canvasZ = Math.round(
-      (layer.pos.z! / 100) * state.currentCanvas.canvasHeight -
+      (layer.pos!.z / 100) * state.currentCanvas.canvasHeight -
         state.currentCanvas.listenerHeight / 2
     );
 
@@ -59,7 +59,7 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
 
       const x = centerX + radius * Math.cos(radians);
       const z = centerZ + radius * Math.sin(radians);
-      const y = layer.pos.y;
+      const y = layer.pos!.y;
 
       positions.push({ x, y, z });
       sprite[`sound${i}`] = [0, 100000, true];
@@ -74,9 +74,12 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
 
     const playSound = () => {
       howl.play();
-      const interval =
-        Math.random() * (maxInterval - minInterval) + minInterval;
-      setTimeout(playSound, interval);
+      howl.once("end", () => {
+        const interval =
+          Math.random() * (maxInterval - minInterval) + minInterval;
+        setTimeout(playSound, interval);
+        console.log("cafe will play again in", interval, "seconds");
+      });
     };
 
     playSound();
@@ -84,10 +87,11 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
 
   switch (layer.renderType) {
     case "cafe": {
+      // Cafe sound will be played from fixed position inside the cafe space
       console.log("cafe: ", layer);
       const NewHowl = new Howl({
         src: [layer.path],
-        autoplay: true,
+        autoplay: false,
         onload: function () {
           console.log(layer.id + ":" + layer.name + ": loaded");
         },
@@ -97,11 +101,14 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
         onstop: function () {
           console.log(layer.id + ":" + layer.name + ": stopped");
         },
+        onend: function () {
+          console.log(layer.id + ":" + layer.name + ": ended");
+        },
       });
 
       NewHowl.once("load", () => {
         const position = percentToPixel();
-        NewHowl.pos(position.x, layer.pos.y, position.z);
+        NewHowl.pos(position.x, layer.pos!.y, position.z);
         NewHowl.orientation(0, 0, 0);
         randomInterval(NewHowl);
       });
@@ -109,7 +116,8 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
     }
 
     case "ambience": {
-      const { positions, sprite } = positionCircleSounds(5, 100);
+      const { node, radius } = layer.renderAttr!;
+      const { positions, sprite } = positionCircleSounds(node, radius);
       console.log("Cluster Positions: ", positions);
 
       const NewHowl = new Howl({
@@ -128,15 +136,17 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
       });
 
       NewHowl.once("load", () => {
-        createLowPass(NewHowl);
+        {
+          layer.isOutside && createLowPass(NewHowl);
+        }
         positions.forEach((position, index) => {
           const spriteName = `sound${index}`;
           const soundId = NewHowl.play(spriteName);
           NewHowl.pos(position.x, position.y, position.z, soundId);
           NewHowl.orientation(
-            layer.orientation[0],
-            layer.orientation[1],
-            layer.orientation[2],
+            layer.orientation![0],
+            layer.orientation![1],
+            layer.orientation![2],
             soundId
           );
           console.log(
@@ -151,7 +161,7 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
     case "static": {
       const NewHowl = new Howl({
         src: [layer.path],
-        autoplay: true,
+        loop: true,
         onload: function () {
           console.log(layer.id + ":" + layer.name + ": loaded");
         },
@@ -195,9 +205,9 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
           const soundId = NewHowl.play(spriteName);
           NewHowl.pos(position.x, position.y, position.z, soundId);
           NewHowl.orientation(
-            layer.orientation[0],
-            layer.orientation[1],
-            layer.orientation[2],
+            layer.orientation![0],
+            layer.orientation![1],
+            layer.orientation![2],
             soundId
           );
           console.log(

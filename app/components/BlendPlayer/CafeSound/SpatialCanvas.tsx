@@ -56,8 +56,11 @@ const SpatialCanvas = () => {
   };
 
   return (
-    <div>
-      <div ref={refCanvas} className='relative w-full h-[35rem] rounded-2xl'>
+    <div className='flex justify-center'>
+      <div
+        ref={refCanvas}
+        className='relative w-full justify-center max-w-[55rem] aspect-[469/360] rounded-2xl'
+      >
         <div className='fixed'>
           <Image
             src={backgroundImageUrl}

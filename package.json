@@ -34,6 +34,7 @@
     "react-live-clock": "^6.1.23-beta",
     "react-measure": "^2.5.2",
     "react-timer-hook": "^3.0.7",
+    "react-toastify": "^10.0.5",
     "react-use-measure": "^2.1.1",
     "simple-zustand-devtools": "^1.1.0",
     "supabase": "^1.178.2",
