@@ -52,7 +52,7 @@ const AmbiSoundNode = ({ id, name, type }: Props) => {
           type='range'
           min={0}
           max='100'
-          defaultValue={howlInstance?.volume() * 100}
+          defaultValue={howlInstance!.volume() * 100}
           className='range range-xs range-success '
           onChange={handleVolumeChange}
         />
