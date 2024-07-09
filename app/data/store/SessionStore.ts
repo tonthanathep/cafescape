@@ -73,17 +73,20 @@ const useSessionStore = create<SessionStore>((set) => ({
       },
     })),
   clearSession: () =>
-    set(() => ({
-      currentSession: {
-        id: "",
-        owner_uuid: "",
-        blends_uuid: "",
-        created_at: "",
-        duration: 0,
-        status: "ongoing",
-        score: 0,
-      },
-    })),
+    set(() => {
+      console.log("clear session");
+      return {
+        currentSession: {
+          id: "",
+          owner_uuid: "",
+          blends_uuid: "",
+          created_at: "",
+          duration: 0,
+          status: "ongoing",
+          score: 0,
+        },
+      };
+    }),
 }));
 
 if (process.env.NODE_ENV === "development") {

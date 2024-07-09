@@ -10,6 +10,7 @@ export interface BlendType {
   owner: any;
   id: string;
   created_at: string;
+  category: "study" | "work" | "relax" | "sleep";
   name: string;
   cafeLayers: SoundSourcesType[];
   ambiLayers: SoundSourcesType[];

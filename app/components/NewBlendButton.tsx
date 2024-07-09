@@ -25,10 +25,7 @@ const NewBlendButton = ({ btnTitle, title }: Props) => {
       id: undefined,
       created_at: undefined,
       name: newName,
-      layerType: {
-        isCafe: currentBlend.cafeLayers.length === 0 ? false : true,
-        isNoise: currentBlend.ambiLayers.length === 0 ? false : true,
-      },
+      category: selectedOption,
     };
 
     axios.post("/api/blends/new", newBlend).then(function (response) {
@@ -97,6 +94,16 @@ const NewBlendButton = ({ btnTitle, title }: Props) => {
               }`}
             >
               <span className=''>Relax</span>
+            </div>
+            <div
+              onClick={() => handleSelect("sleep")}
+              className={`cursor-pointer p-4 w-full border border-1 rounded-xl flex justify-center items-center transition-all duration-200 hover:scale-105 ${
+                selectedOption === "sleep"
+                  ? "border-blue-600 border-2  bg-purple-100"
+                  : "border-gray-300"
+              }`}
+            >
+              <span className=''>Sleep</span>
             </div>
           </div>
           <div className='btn btn-primary w-full' onClick={handleNewBlend}>

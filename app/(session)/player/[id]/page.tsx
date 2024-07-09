@@ -4,6 +4,7 @@ import SpatialCanvas from "@/app/components/BlendPlayer/CafeSound/SpatialCanvas"
 import usePlayerStore from "@/app/data/store/PlayerStore";
 import useSessionStore from "@/app/data/store/SessionStore";
 import { getBackgroundImageUrl } from "@/app/utils/getBackgroundImage";
+import { createClient } from "@/app/utils/supabase/client";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -15,12 +16,20 @@ import BlendInfo from "../../../components/BlendPlayer/BlendInfo";
 const BlendPlayerPage = () => {
   const { id } = useParams();
   const { currentBlend, setBlend, setBlendId } = usePlayerStore();
-  const { currentSession, setSessionBlend, setSessionId, setSession } =
-    useSessionStore();
+  const {
+    currentSession,
+    setSessionBlend,
+    setSessionId,
+    setSession,
+    clearSession,
+  } = useSessionStore();
   const backgroundImageUrl = getBackgroundImageUrl();
   const [refresh, setRefresh] = useState(0);
   const [update, setUpdate] = useState(false);
   const [tempSessionId, setTempSessionId] = useState("");
+  const [localBlendId, setLocalBlendId] = useState("");
+  const [isOwner, setOwner] = useState(false);
+  const supabase = createClient();
 
   useEffect(() => {
     if (id !== currentBlend.id) {
@@ -30,7 +39,20 @@ const BlendPlayerPage = () => {
     }
   }, [id]);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
+    const checkOwner = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data.user?.id === currentBlend.owner) {
+        setOwner(true);
+        console.log("owner: true");
+      } else {
+        setOwner(false);
+        console.log("owner: true");
+      }
+    };
+
     const fetchBlend = async () => {
       try {
         const res = await fetch("/api/blends/" + id);
@@ -40,6 +62,7 @@ const BlendPlayerPage = () => {
             setBlend(blends);
             setSessionBlend(blends.id);
             setUpdate(true);
+            checkOwner();
           }
         } else {
           console.error("Failed to fetch blend data");
@@ -123,7 +146,7 @@ const BlendPlayerPage = () => {
               variants={fadeInVariants}
               transition={{ duration: 0.7, ease: "easeOut" }}
             >
-              <BlendInfo />
+              <BlendInfo isOwner={isOwner} />
             </motion.div>
           </div>
           <div className='basis basis-3/6 mt-[4.5rem]'>

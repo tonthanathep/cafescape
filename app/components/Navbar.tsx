@@ -57,7 +57,7 @@ const Navbar = () => {
     <div className='fixed z-50 w-full'>
       <div className='flex navbar justify-between h-[3.3rem] pt-8 items-center mx-auto w-full pl-8 pr-4'>
         <div className='navbar-start'>
-          <SiteLogo variant='dark' />
+          <SiteLogo variant='light' />
         </div>
         <div className='navbar-end flex flex-row gap-3'>
           <div className='flex flex-row  gap-3 pt-4 pb-4 pr-6 pl-6 drop-shadow-2xl bg-white rounded-2xl'>
@@ -65,11 +65,12 @@ const Navbar = () => {
               <Clock format={"HH:mm"} ticking={true} />
             </h1>
             <h1 className='text-sm font-bold text-black'>
-              {today.toLocaleString("default", { weekday: "short" })},{" "}
+              {/* {today.toLocaleString("default", { weekday: "short" })},{" "}
               {today.toLocaleString("default", {
                 month: "long",
               })}{" "}
-              {today.getDate()}{" "}
+              {today.getDate()}{" "} */}
+              Thu, July 4
             </h1>
           </div>
           <div className='dropdown dropdown-bottom dropdown-end flex flex-row h-[3.3rem] items-center p-1 drop-shadow-2xl bg-white rounded-2xl'>

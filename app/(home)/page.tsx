@@ -1,19 +1,10 @@
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import BlendSuggestionPane from "../components/BlendSuggestionPane";
 import GreetingHero from "../components/GreetingHero";
 import { getBackgroundImageUrl } from "../utils/getBackgroundImage";
-import { createClient } from "../utils/supabase/server";
 
-export default async function Home() {
+export default function Home() {
   const backgroundImageUrl = getBackgroundImageUrl();
-
-  const supabase = createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    redirect("/login");
-  }
 
   return (
     <main>
@@ -29,8 +20,9 @@ export default async function Home() {
         </div>
         <div className='relative flex flex-col w-full max-w-[65rem] mb-[3rem]'>
           <GreetingHero />
-          <BlendSuggestionPane type='self' />
-          <BlendSuggestionPane type='discover' />
+          <BlendSuggestionPane key='self' type='self' delay={0} />
+          <BlendSuggestionPane key='preferences' type='preferences' delay={0} />
+          <BlendSuggestionPane key='discover' type='discover' delay={0} />
         </div>
       </div>
     </main>
