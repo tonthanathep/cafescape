@@ -1,3 +1,4 @@
+import EditProfileModal from "@/app/components/EditProfileModal";
 import { createClient } from "@/app/utils/supabase/server";
 
 const Page = async () => {
@@ -16,7 +17,7 @@ const Page = async () => {
     .select("*")
     .eq("id", userId)
     .then((data: any) => {
-      userData = data.data;
+      userData = data.data[0]; // Assuming data is an array
     });
 
   await supabase
@@ -50,6 +51,8 @@ const Page = async () => {
     totalDurationInSeconds
   );
 
+  console.log(userData);
+
   return (
     <div className='flex items-center justify-center min-h-screen bg-amber-50'>
       <div className='flex flex-col'>
@@ -62,6 +65,7 @@ const Page = async () => {
             </div>
           ))}
         </div>
+        <EditProfileModal userData={userData} />
       </div>
     </div>
   );

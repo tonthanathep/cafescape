@@ -1,7 +1,7 @@
 "use client";
 // @ts-nocheck
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Clock from "react-live-clock";
 import useUserStore from "../data/store/UserStore";
 import { createClient } from "../utils/supabase/client";
@@ -9,6 +9,7 @@ import SiteLogo from "./SiteLogo";
 
 const Navbar = () => {
   const { setCurrentUser, setCurrentProfile, currentUser } = useUserStore();
+  const [editOpen, setEditOpen] = useState(false);
 
   //fetch data
 
@@ -42,6 +43,10 @@ const Navbar = () => {
     };
     fetchUserData();
   }, []);
+
+  const handleEdit = () => {
+    setEditOpen(true);
+  };
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -97,9 +102,6 @@ const Navbar = () => {
             >
               <li onClick={() => router.push("/profile")}>
                 <a>My Profile</a>
-              </li>
-              <li>
-                <a>Edit Profile</a>
               </li>
               <li onClick={() => router.push("/onboarding")}>
                 <a>Redo Onboarding</a>

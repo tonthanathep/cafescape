@@ -92,6 +92,7 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
       const NewHowl = new Howl({
         src: [layer.path],
         autoplay: false,
+        volume: layer.vol,
         onload: function () {
           console.log(layer.id + ":" + layer.name + ": loaded");
         },
@@ -124,6 +125,7 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
         src: [layer.path],
         sprite: sprite,
         loop: true,
+        volume: layer.vol,
         onload: function () {
           console.log(layer.id + ":" + layer.name + ": loaded");
         },
@@ -162,6 +164,7 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
       const NewHowl = new Howl({
         src: [layer.path],
         loop: true,
+        volume: layer.vol,
         onload: function () {
           console.log(layer.id + ":" + layer.name + ": loaded");
         },
@@ -186,6 +189,7 @@ const createHowlInstance = (layer: SoundSourcesType, state: PlayerStore) => {
       const NewHowl = new Howl({
         src: [layer.path],
         sprite: sprite,
+        volume: layer.vol,
         loop: true,
         onload: function () {
           console.log(layer.id + ":" + layer.name + ": loaded");
