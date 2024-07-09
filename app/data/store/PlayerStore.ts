@@ -59,7 +59,7 @@ const usePlayerStore = create<PlayerStore>((set) => ({
     cafeLayers: [],
     ambiLayers: [],
     listenerPos: { x: 0, y: 0, z: 0 },
-    layerType: { isCafe: false, isNoise: false },
+    category: "study",
   },
   currentCanvas: {
     canvasHeight: 0,

@@ -2,6 +2,7 @@ import { PannerAttributes } from "howler";
 import { cafeSounds } from "./cafeSounds";
 import { natureSounds } from "./natureSounds";
 import { staticSounds } from "./staticSounds";
+import { urbanSounds } from "./urbanSounds";
 
 export interface SoundSourcesType {
   id: number;
@@ -11,7 +12,7 @@ export interface SoundSourcesType {
   isOutside: boolean;
   renderType: "cafe" | "static" | "ambience" | "cluster";
   renderAttr?: { node: number; radius: number };
-  soundType: "cafe" | "static" | "nature";
+  soundType: "cafe" | "static" | "nature" | "urban";
   vol: number;
   pos?: { x: number; y: number; z: number };
   orientation?: [number, number, number];
@@ -29,6 +30,7 @@ const soundSources = mergeSounds([
   ...cafeSounds,
   ...staticSounds,
   ...natureSounds,
+  ...urbanSounds,
 ]);
 
 export default soundSources;

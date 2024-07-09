@@ -10,7 +10,7 @@ export const staticSounds: Array<SoundLibrary> = [
     isOutside: false,
     renderType: "static",
     soundType: "static",
-    vol: 0.5,
+    vol: 0.1,
   },
   {
     name: "Fan Noise",
@@ -19,7 +19,7 @@ export const staticSounds: Array<SoundLibrary> = [
     isOutside: false,
     renderType: "static",
     soundType: "static",
-    vol: 0.5,
+    vol: 0.2,
   },
   {
     name: "Grey Noise",
@@ -28,15 +28,6 @@ export const staticSounds: Array<SoundLibrary> = [
     isOutside: false,
     renderType: "static",
     soundType: "static",
-    vol: 0.5,
-  },
-  {
-    name: "Pink Noise",
-    desc: "Gentle static pink noise",
-    path: "https://nmbeyfxpmhmxwjbzmcod.supabase.co/storage/v1/object/public/sounds/static/static_pinknoise.mp3",
-    isOutside: false,
-    renderType: "static",
-    soundType: "static",
-    vol: 0.5,
+    vol: 0.1,
   },
 ];

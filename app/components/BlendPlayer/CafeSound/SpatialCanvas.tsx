@@ -45,8 +45,13 @@ const SpatialCanvas = () => {
   ]);
 
   const handleDrag = (e: DraggableEvent, data: DraggableData) => {
+    // Set Listener Position for State Management
     setListenerPos(data.x, data.y);
+
+    // Set Listener Position for Draggable Object
     setListenerPosition({ x: data.x, y: data.y });
+
+    // Set Listener Position for Howler Object
     Howler.pos(data.x, 0, data.y);
   };
 
@@ -71,17 +76,6 @@ const SpatialCanvas = () => {
             height={boundsCanvas.height}
           />
         </div>
-        <Draggable
-          bounds='parent'
-          onDrag={handleDrag}
-          position={listenerPosition}
-        >
-          <div
-            ref={refListener}
-            className='z-10 w-8 h-8 rounded-full drop-shadow-[0_14px_5px_rgba(0,0,0,0.35)] bg-white outline outline-0 hover:-translate-y-2 hover:drop-shadow-[0_30px_10px_rgba(0,0,0,0.25)] hover:outline-cyan-60/40 transition-all duration-400 ease-out'
-          ></div>
-        </Draggable>
-
         {currentCanvas.canvasCafe.map((layer) => (
           <motion.div
             initial='hidden'
@@ -95,14 +89,24 @@ const SpatialCanvas = () => {
               disabled
               position={{ x: layer.x, y: layer.z }}
             >
-              <div className='z-10 w-fit p-2 pl-4 pr-4 bg-white/70 backdrop-blur-sm rounded-full drop-shadow-[0_14px_5px_rgba(0,0,0,0.60)] hover:-translate-y-2 hover:drop-shadow-[0_30px_10px_rgba(0,0,0,0.25)] transition-all duration-400'>
-                <p className='text-sm font-semibold text-black/80'>
+              <div className='-z-10 flex items-center justify-center -mt-9 -ml-16 w-fit p-2 pl-4 pr-4 bg-white/70 backdrop-blur-sm rounded-full drop-shadow-[0_14px_5px_rgba(0,0,0,0.60)] hover:-translate-y-2 hover:drop-shadow-[0_30px_10px_rgba(0,0,0,0.25)] transition-all duration-400'>
+                <p className='text-xs font-semibold text-black/80'>
                   {layer.name}
                 </p>
               </div>
             </Draggable>
           </motion.div>
         ))}
+        <Draggable
+          bounds='parent'
+          onDrag={handleDrag}
+          position={listenerPosition}
+        >
+          <div
+            ref={refListener}
+            className='z-10 w-8 h-8 rounded-full drop-shadow-[0_14px_5px_rgba(0,0,0,0.35)] bg-white outline outline-0 hover:-translate-y-2 hover:drop-shadow-[0_30px_10px_rgba(0,0,0,0.25)] hover:outline-cyan-60/40 transition-all duration-400 ease-out'
+          ></div>
+        </Draggable>
       </div>
 
       {/* <div className='pt-5 pl-3 w-fit opacity-50 select-none'>

@@ -113,7 +113,7 @@ const OnboardingPane = () => {
                   <div className='flex flex-col justify-center items-center'>
                     <h1 className='text-[1.8rem] font-bold text-gray'>🧑‍💻</h1>
                     <h1 className='-mt-1 text-sm font-light text-gray'>
-                      Coding
+                      Working
                     </h1>
                   </div>
                 </div>

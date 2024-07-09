@@ -9,14 +9,18 @@ import { useEffect, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
 import NewBlendButton from "../NewBlendButton";
 
-const BlendInfo = () => {
+interface Props {
+  isOwner: boolean;
+}
+
+const BlendInfo = ({ isOwner }: Props) => {
   const { currentSession, setSessionStatus, setSessionDuration } =
     useSessionStore();
   const { currentBlend } = usePlayerStore();
   const supabase = createClient();
-  const [isOwner, setOwner] = useState(false);
   const [isSaved, setSaved] = useState(false);
   const router = useRouter();
+  const [isLoaded, setLoaded] = useState(false);
 
   const handleAbandon = () => {
     // send axios put to delete session
@@ -53,30 +57,13 @@ const BlendInfo = () => {
   const handleSave = () => {
     const updateBlend = {
       ...currentBlend,
-      layerType: {
-        isCafe: currentBlend.cafeLayers.length === 0 ? false : true,
-        isNoise: currentBlend.ambiLayers.length === 0 ? false : true,
-      },
     };
-
     axios
       .put("/api/blends/" + currentBlend.id, updateBlend)
       .then(function (response) {
         setSaved(true);
       });
   };
-
-  useEffect(() => {
-    const checkOwner = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (data.user?.id === currentBlend.owner) {
-        setOwner(true);
-      } else {
-        setOwner(false);
-      }
-    };
-    checkOwner();
-  }, [currentBlend.id]);
 
   //Stopwatch
   const {

@@ -16,15 +16,19 @@ export async function POST(req: NextRequest) {
     id: undefined,
     created_at: undefined,
     owner_uuid: undefined,
+    status: "ongoing",
+    score: 0,
+    duration: 0,
   };
   const { data, error } = await supabase.auth.getUser();
   if (data) {
+    console.log(newSession);
     const { data, error } = await supabase
       .from("sessions")
       .insert(newSession)
       .select();
     if (data) {
-      console.log("data: ", data);
+      console.log("new session created: ", data);
       return NextResponse.json(data, { status: 200 });
     } else if (error) {
       console.log(error);

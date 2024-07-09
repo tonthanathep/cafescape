@@ -9,7 +9,7 @@ interface Props {
 }
 
 const AmbiSoundNode = ({ id, name, type }: Props) => {
-  const { currentCanvas, deleteLayer, setVolume } = usePlayerStore();
+  const { deleteLayer, setVolume } = usePlayerStore();
 
   const howlInstance = getHowlInstance("ambi", id);
 
@@ -52,18 +52,11 @@ const AmbiSoundNode = ({ id, name, type }: Props) => {
           type='range'
           min={0}
           max='100'
+          defaultValue={howlInstance?.volume() * 100}
           className='range range-xs range-success '
           onChange={handleVolumeChange}
         />
       </div>
-      {/* <div className='flex flex-row'>
-        <button className='btn btn-success btn-sm' onClick={handleSoundPlay}>
-          Play
-        </button>
-        <button className='btn btn-success btn-sm' onClick={handleRemove}>
-          Remove
-        </button>
-      </div> */}
     </div>
   );
 };
