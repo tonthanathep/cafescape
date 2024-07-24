@@ -27,10 +27,10 @@ const GreetingHero = async () => {
           {today.toLocaleString("default", {
             month: "long",
           })}{" "}
-          {today.getDate()}{" "}
+          {/* {today.getDate()}{" "} */}4
         </h1>
         <h1 className='text-3xl text-white font-semibold'>
-          Let's get back to work, {user.name}
+          {/* Let's get back to work! {user.name} */}
         </h1>
       </div>
       <div>
