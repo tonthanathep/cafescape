@@ -16,6 +16,10 @@ const GreetingHero = async () => {
       .eq("id", data.data.user?.id)
       .then((data: any) => {
         user.name = data.data[0].nick_name;
+      })
+      .catch((error: any) => {
+        console.log(error);
+        user.name = "Anthony";
       });
   });
 
@@ -23,14 +27,15 @@ const GreetingHero = async () => {
     <div className='mt-[12rem] flex flex-row items-end justify-between'>
       <div className='flex flex-col gap-1'>
         <h1 className='text-xl text-white/70 font-light'>
-          {" "}
+          {/* {" "}
           {today.toLocaleString("default", {
             month: "long",
           })}{" "}
-          {/* {today.getDate()}{" "} */}4
+          {today.getDate()}{" "} */}
+          July 20
         </h1>
         <h1 className='text-3xl text-white font-semibold'>
-          {/* Let's get back to work! {user.name} */}
+          Let's get back to work! {user.name}
         </h1>
       </div>
       <div>

@@ -2,7 +2,6 @@
 // @ts-nocheck
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Clock from "react-live-clock";
 import useUserStore from "../data/store/UserStore";
 import { createClient } from "../utils/supabase/client";
 import SiteLogo from "./SiteLogo";
@@ -67,7 +66,8 @@ const Navbar = () => {
         <div className='navbar-end flex flex-row gap-3'>
           <div className='flex flex-row  gap-3 pt-4 pb-4 pr-6 pl-6 drop-shadow-2xl bg-white rounded-2xl'>
             <h1 className='text-sm font-bold text-black/80'>
-              <Clock format={"HH:mm"} ticking={true} />
+              {/* <Clock format={"HH:mm"} ticking={true} /> */}
+              14:12``
             </h1>
             <h1 className='text-sm font-bold text-black'>
               {/* {today.toLocaleString("default", { weekday: "short" })},{" "}
@@ -75,7 +75,7 @@ const Navbar = () => {
                 month: "long",
               })}{" "}
               {today.getDate()}{" "} */}
-              Thu, July 4
+              Thu, July 20
             </h1>
           </div>
           <div className='dropdown dropdown-bottom dropdown-end flex flex-row h-[3.3rem] items-center p-1 drop-shadow-2xl bg-white rounded-2xl'>
@@ -89,7 +89,8 @@ const Navbar = () => {
               </div>
               <div className='flex flex-col mr-3'>
                 <h1 className='text-sm font-bold text-black'>
-                  {currentUser?.user_profile.nick_name}
+                  {/* {currentUser?.user_profile.nick_name} */}
+                  Anthony
                 </h1>
                 <h1 className='text-[0.7rem] font-light text-black/50'>
                   Cozy member
